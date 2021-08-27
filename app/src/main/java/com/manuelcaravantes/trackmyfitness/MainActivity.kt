@@ -11,9 +11,12 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.manuelcaravantes.trackmyfitness.ui.theme.TrackMyFitnessTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,22 +25,26 @@ class MainActivity : ComponentActivity() {
             TrackMyFitnessTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-
+                    MainLayout()
                 }
             }
         }
     }
 }
 
+
 @Composable
 fun MainLayout() {
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = { TopBar() },
-        bottomBar = { BottomBar() },
+        bottomBar = { BottomBar(scaffoldState, scope) },
         floatingActionButton = { Fab() },
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center,
-
+        drawerContent = {}
     ) {
 
     }
@@ -47,14 +54,22 @@ fun MainLayout() {
 
 @Composable
 fun TopBar() {
-    TopAppBar(title = { Text(text = "Track My Fitness") } )
+    TopAppBar(
+        title = { Text(text = "Track My Fitness") },
+    )
 }
 
 @Composable
-fun BottomBar() {
+fun BottomBar(
+    scaffoldState: ScaffoldState,
+    scope: CoroutineScope
+) {
+
     BottomAppBar() {
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = {
+                scope.launch { scaffoldState.drawerState.open() }
+            }) {
                 Icon(imageVector = Icons.Filled.Menu, contentDescription = "Menu Button")
             }
         }
