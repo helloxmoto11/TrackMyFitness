@@ -14,9 +14,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.manuelcaravantes.trackmyfitness.data.TAG
 import com.manuelcaravantes.trackmyfitness.data.model.FakeWorkout
 import com.manuelcaravantes.trackmyfitness.data.model.Workout
+import com.manuelcaravantes.trackmyfitness.data.util.TAG
 
 
 @ExperimentalMaterialApi
@@ -131,6 +131,6 @@ fun TodayRow(
 @Preview(showBackground = true)
 @Composable
 fun PreviewTodayRow() {
-
+    TodayRow(date = "Today", onIncrementDate = { /*TODO*/ }, onDecrementDate = {})
 
 }

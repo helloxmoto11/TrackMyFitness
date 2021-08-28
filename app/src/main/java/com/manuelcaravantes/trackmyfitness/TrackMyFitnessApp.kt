@@ -1,8 +1,7 @@
 package com.manuelcaravantes.trackmyfitness
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 
-class TrackMyFitnessApp : Application() {
-
-
-}
+@HiltAndroidApp
+class TrackMyFitnessApp : Application()

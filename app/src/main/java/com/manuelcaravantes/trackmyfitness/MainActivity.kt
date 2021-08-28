@@ -17,12 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.manuelcaravantes.trackmyfitness.ui.main.MainScreen
 import com.manuelcaravantes.trackmyfitness.ui.theme.TrackMyFitnessTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-
 
     @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
