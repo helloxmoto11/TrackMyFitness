@@ -5,7 +5,8 @@ data class Workout(
     var name: String = "",
     var time: String = "",
     var distance: Float = 0f,
-    var details: String = ""
+    var details: String = "",
+    var date: String = ""
 )
 
 
@@ -39,4 +40,8 @@ fun FakeWorkouts(): List<Workout> {
     return listOf(
         w1, w2, w3
     )
+}
+
+fun FakeWorkout(): Workout {
+    return Workout(1, "Jogging", "00:55", 5f, "Ran around the block", "Today")
 }

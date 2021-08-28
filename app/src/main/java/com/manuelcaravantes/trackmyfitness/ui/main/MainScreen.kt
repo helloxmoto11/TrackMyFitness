@@ -1,5 +1,6 @@
 package com.manuelcaravantes.trackmyfitness.ui.main
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -12,6 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.manuelcaravantes.trackmyfitness.data.TAG
+import com.manuelcaravantes.trackmyfitness.data.model.FakeWorkout
 import com.manuelcaravantes.trackmyfitness.data.model.Workout
 
 
@@ -19,15 +23,24 @@ import com.manuelcaravantes.trackmyfitness.data.model.Workout
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    viewModel: MainScreenViewModel = MainScreenViewModel()
+    mainScreenViewModel: MainScreenViewModel = viewModel()
 ) {
-    val workouts = viewModel.workouts.observeAsState()
+    val workouts = mainScreenViewModel.workouts.observeAsState()
+    val date = mainScreenViewModel.date.observeAsState()
+
+    Log.d(TAG, "MainScreen: ${date.value}")
+    Log.d(TAG, "MainScreen: $date")
     Column(
         modifier
             .fillMaxSize()
             .padding(8.dp)
     ) {
-        TodayRow()
+        date.value?.let {
+            TodayRow(
+                it,
+            onIncrementDate = { mainScreenViewModel.onIncrementDate() },
+            onDecrementDate = { mainScreenViewModel.onDecrementDate() })
+        }
         workouts.value?.let {
             for (workout in it) {
                 WorkoutCard(workout = workout)
@@ -50,7 +63,7 @@ fun PreviewMainScreen() {
 @ExperimentalMaterialApi
 @Composable
 fun WorkoutCard(
-    workout: Workout
+    workout: Workout = FakeWorkout()
 ) {
     Card(
         onClick = { /*TODO*/ },
@@ -75,23 +88,32 @@ fun WorkoutCard(
             }
             Text(text = "Time: ${workout.time}")
             Text(text = "Distance: ${workout.distance}")
+            Text(text = "Details: ${workout.details}")
         }
     }
 
 }
 
+@ExperimentalMaterialApi
+@Preview
+@Composable
+fun PreviewWorkoutCard() {
+    WorkoutCard()
+}
+
 @Composable
 fun TodayRow(
-    date: String = "08-28-2021",
-    onDateChange: () -> Unit = {}
+    date: String,
+    onIncrementDate: () -> Unit,
+    onDecrementDate: () -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 16.dp)
+            .padding(top = 16.dp, bottom = 16.dp)
     ) {
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = onDecrementDate) {
             Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = null)
         }
         Text(
@@ -100,7 +122,7 @@ fun TodayRow(
             style = MaterialTheme.typography.h6,
             modifier = Modifier.align(Alignment.CenterVertically)
         )
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = onIncrementDate) {
             Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = null)
         }
     }
@@ -109,6 +131,6 @@ fun TodayRow(
 @Preview(showBackground = true)
 @Composable
 fun PreviewTodayRow() {
-    TodayRow()
+
 
 }
