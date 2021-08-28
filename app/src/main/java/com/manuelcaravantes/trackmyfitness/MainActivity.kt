@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -14,11 +15,16 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.manuelcaravantes.trackmyfitness.ui.main.MainScreen
 import com.manuelcaravantes.trackmyfitness.ui.theme.TrackMyFitnessTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+
+
+
+    @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -33,6 +39,7 @@ class MainActivity : ComponentActivity() {
 }
 
 
+@ExperimentalMaterialApi
 @Composable
 fun MainLayout() {
     val scaffoldState = rememberScaffoldState()
@@ -46,7 +53,7 @@ fun MainLayout() {
         floatingActionButtonPosition = FabPosition.Center,
         drawerContent = {}
     ) {
-
+        MainScreen(Modifier.padding(it))
     }
 
 
@@ -87,6 +94,7 @@ fun Fab() {
     }
 }
 
+@ExperimentalMaterialApi
 @Preview
 @Composable
 fun PreviewMainLayout() {
