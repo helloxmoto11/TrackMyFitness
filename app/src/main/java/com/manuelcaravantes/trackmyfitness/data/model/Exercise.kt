@@ -1,6 +1,6 @@
 package com.manuelcaravantes.trackmyfitness.data.model
 
-data class Workout(
+data class Exercise(
     var id: Int = -1,
     var name: String = "",
     var time: String = "",
@@ -15,8 +15,8 @@ data class Workout(
 
 
 
-fun fakeWorkouts(): List<Workout> {
-    val w1 = Workout(
+fun fakeExercises(): MutableList<Exercise> {
+    val w1 = Exercise(
         1,
         "Running",
         "00:45",
@@ -24,7 +24,7 @@ fun fakeWorkouts(): List<Workout> {
         "Ran around the neighborhood.",
         "2021-08-28"
     )
-    val w2 = Workout(
+    val w2 = Exercise(
         2,
         "Gym",
         "00:45",
@@ -32,7 +32,7 @@ fun fakeWorkouts(): List<Workout> {
         "Back and Biceps.",
         "2021-08-28"
     )
-    val w3 = Workout(
+    val w3 = Exercise(
         3,
         "Swimming",
         "00:25",
@@ -41,35 +41,35 @@ fun fakeWorkouts(): List<Workout> {
         "2021-08-28"
     )
 
-    val w4 = Workout(
-        1,
+    val w4 = Exercise(
+        4,
         "Rowing",
         "00:45",
         1.4f,
         "Spent some time on the rower.",
         "2021-08-29"
     )
-    val w5 = Workout(
-        2,
+    val w5 = Exercise(
+        5,
         "Walking",
         "00:45",
         0f,
         "Went for a Walk",
         "2021-08-29"
     )
-    val w6 = Workout(
-        3,
+    val w6 = Exercise(
+        6,
         "Gym",
         "00:25",
         1f,
         "LEG DAY!!",
         "2021-08-29"
     )
-    return listOf(
+    return mutableListOf(
         w1, w2, w3, w4, w5, w6
     )
 }
 
-fun FakeWorkout(): Workout {
-    return Workout(1, "Jogging", "00:55", 5f, "Ran around the block", "Today")
+fun fakeExercise(): Exercise {
+    return Exercise(1, "Jogging", "00:55", 5f, "Ran around the block", "Today")
 }

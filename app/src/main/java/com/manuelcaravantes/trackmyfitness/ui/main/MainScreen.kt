@@ -17,8 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.manuelcaravantes.trackmyfitness.R
-import com.manuelcaravantes.trackmyfitness.data.model.FakeWorkout
-import com.manuelcaravantes.trackmyfitness.data.model.Workout
+import com.manuelcaravantes.trackmyfitness.data.model.Exercise
+import com.manuelcaravantes.trackmyfitness.data.model.fakeExercise
 import com.manuelcaravantes.trackmyfitness.data.util.TAG
 
 
@@ -28,7 +28,7 @@ fun MainScreen(
     modifier: Modifier = Modifier,
     mainScreenViewModel: MainScreenViewModel = viewModel()
 ) {
-    val workouts = mainScreenViewModel.workouts.observeAsState()
+    val workouts = mainScreenViewModel.exercises.observeAsState()
     val date = mainScreenViewModel.date.observeAsState()
 
     Log.d(TAG, "MainScreen: ${date.value}")
@@ -47,7 +47,7 @@ fun MainScreen(
         workouts.value?.let {
             if (it.isNotEmpty()) {
                 for (workout in it) {
-                    WorkoutCard(workout = workout)
+                    WorkoutCard(exercise = workout)
                 }
             } else EmptyMessage()
         }
@@ -68,7 +68,7 @@ fun PreviewMainScreen() {
 @ExperimentalMaterialApi
 @Composable
 fun WorkoutCard(
-    workout: Workout = FakeWorkout()
+    exercise: Exercise = fakeExercise()
 ) {
     Card(
         onClick = { /*TODO*/ },
@@ -85,7 +85,7 @@ fun WorkoutCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = workout.name,
+                    text = exercise.name,
                     style = MaterialTheme.typography.h6
                 )
                 Checkbox(
@@ -93,9 +93,9 @@ fun WorkoutCard(
                     onCheckedChange = { /**DO SOMETHING HERE**/ }
                 )
             }
-            Text(text = "Time: ${workout.time}")
-            Text(text = "Distance: ${workout.distance}")
-            Text(text = "Details: ${workout.details}")
+            Text(text = "Time: ${exercise.time}")
+            Text(text = "Distance: ${exercise.distance}")
+            Text(text = "Details: ${exercise.details}")
         }
     }
 

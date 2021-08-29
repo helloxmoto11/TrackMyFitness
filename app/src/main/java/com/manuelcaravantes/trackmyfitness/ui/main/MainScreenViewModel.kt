@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.manuelcaravantes.trackmyfitness.data.model.FakeWorkoutRepository
-import com.manuelcaravantes.trackmyfitness.data.model.Workout
+import com.manuelcaravantes.trackmyfitness.data.model.FakeExerciseRepository
 import com.manuelcaravantes.trackmyfitness.data.util.TODAY
 import com.manuelcaravantes.trackmyfitness.data.util.formatDate
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,13 +14,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
-    private val workoutRepository: FakeWorkoutRepository
+    private val workoutRepository: FakeExerciseRepository
 ) : ViewModel() {
 
-
-
-    private val _workouts = MutableLiveData<List<Workout>>()
-    val workouts: LiveData<List<Workout>> get() = _workouts
+    val exercises = workoutRepository.exercises
 
     private val _date = MutableLiveData(LocalDate.now())
     private val _stringDate = MutableLiveData(TODAY)
@@ -63,7 +59,7 @@ class MainScreenViewModel @Inject constructor(
 
     private fun setWorkouts(date: LocalDate) {
         viewModelScope.launch {
-            _workouts.value = workoutRepository.getWorkouts(date)
+            workoutRepository.getExercises(date)
         }
     }
 }

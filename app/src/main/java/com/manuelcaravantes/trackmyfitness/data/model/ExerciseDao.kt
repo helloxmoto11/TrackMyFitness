@@ -1,6 +1,6 @@
 package com.manuelcaravantes.trackmyfitness.data.model
 
-interface WorkoutDao {
+interface ExerciseDao {
 
     suspend fun getWorkouts()
 
