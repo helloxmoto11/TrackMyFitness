@@ -25,11 +25,10 @@ import com.manuelcaravantes.trackmyfitness.data.model.fakeExercise
 fun MainScreen(
     modifier: Modifier = Modifier,
     mainScreenViewModel: MainScreenViewModel = hiltViewModel(),
-    showFab: (Boolean) -> Unit = {true}
+
 ) {
-    showFab(true)
-    val workouts = mainScreenViewModel.exercises.observeAsState()
     val date = mainScreenViewModel.date.observeAsState()
+    val workouts = mainScreenViewModel.exercises.observeAsState()
 
     Column(
         modifier

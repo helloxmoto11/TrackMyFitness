@@ -36,7 +36,6 @@ class FakeExerciseRepository @Inject constructor(): ExerciseRepository {
     override suspend fun addExercise(exercise: Exercise) {
         fakeExercises.add(exercise)
         _exercises.value = fakeExercises
-        Log.d(TAG, "addExercise: ${exercises.value}")
     }
 
     override suspend fun deleteExercise(exercise: Exercise) {

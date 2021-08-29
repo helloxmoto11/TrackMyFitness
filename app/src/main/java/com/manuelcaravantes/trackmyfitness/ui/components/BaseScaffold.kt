@@ -30,7 +30,8 @@ fun ScreenScaffold(
     var showFab by remember {
         mutableStateOf(true)
     }
-    val onFabVisChange: (Boolean) -> Unit = { showFab = it }
+//    Log.d(TAG, "ScreenScaffold: showFag = $showFab")
+//    val onFabVisChange: (Boolean) -> Unit = { showFab = it }
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -52,10 +53,12 @@ fun ScreenScaffold(
         ) {
             composable("MAINSCREEN") {
                 //val viewModel = hiltViewModel<MainScreenViewModel>()
-                MainScreen(showFab = onFabVisChange)
+                MainScreen()
+               showFab = true
             }
             composable("AddScreen") {
-                AddExerciseScreen(showFab = onFabVisChange, navController = navController)
+                AddExerciseScreen(navController = navController)
+                showFab = false
             }
         }
     }

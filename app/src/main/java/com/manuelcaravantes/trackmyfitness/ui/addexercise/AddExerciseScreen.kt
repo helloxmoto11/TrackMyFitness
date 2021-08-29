@@ -26,10 +26,8 @@ fun AddExerciseScreen(
     navController: NavController = rememberNavController(),
     addExerciseScreenViewModel: AddExerciseScreenViewModel = hiltViewModel(),
     update: Boolean = false,
-    showFab: (Boolean) -> Unit = { false }
-) {
-    showFab(false)
 
+) {
     val screenState by addExerciseScreenViewModel.screenData.observeAsState()
     val exercise = screenState!!.value
 
