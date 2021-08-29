@@ -1,6 +1,5 @@
 package com.manuelcaravantes.trackmyfitness.ui.components
 
-import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
@@ -15,7 +14,6 @@ import androidx.navigation.compose.composable
 import com.manuelcaravantes.trackmyfitness.BottomBar
 import com.manuelcaravantes.trackmyfitness.Fab
 import com.manuelcaravantes.trackmyfitness.TopBar
-import com.manuelcaravantes.trackmyfitness.data.util.TAG
 import com.manuelcaravantes.trackmyfitness.ui.addexercise.AddExerciseScreen
 import com.manuelcaravantes.trackmyfitness.ui.main.MainScreen
 
@@ -32,7 +30,6 @@ fun ScreenScaffold(
     var showFab by remember {
         mutableStateOf(true)
     }
-    Log.d(TAG, "ScreenScaffold: show Fab = $showFab")
     val onFabVisChange: (Boolean) -> Unit = { showFab = it }
 
     Scaffold(
@@ -58,7 +55,7 @@ fun ScreenScaffold(
                 MainScreen(showFab = onFabVisChange)
             }
             composable("AddScreen") {
-                AddExerciseScreen(showFab = onFabVisChange)
+                AddExerciseScreen(showFab = onFabVisChange, navController = navController)
             }
         }
     }

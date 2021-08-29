@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.manuelcaravantes.trackmyfitness.data.util.TAG
 import java.time.LocalDate
 import javax.inject.Inject
+import javax.inject.Singleton
 
 interface ExerciseRepository {
 
@@ -16,22 +17,26 @@ interface ExerciseRepository {
     suspend fun deleteExercise(exercise: Exercise)
 
 }
-
+@Singleton
 class FakeExerciseRepository @Inject constructor(): ExerciseRepository {
 
-    private val _exercises = MutableLiveData(fakeExercises())
+    private val fakeExercises = fakeExercises()
+    private val _exercises = MutableLiveData(fakeExercises)
     val exercises: LiveData<MutableList<Exercise>>
         get() = _exercises
 
     override suspend fun getExercises(date: LocalDate){
-        val e = fakeExercises().filter {
+        val e = fakeExercises.filter {
             it.date == date.toString()
         }
+        Log.d(TAG, "getExercises: $e")
         _exercises.value = e.toMutableList()
     }
 
     override suspend fun addExercise(exercise: Exercise) {
-        _exercises.value?.add(exercise)
+        fakeExercises.add(exercise)
+        _exercises.value = fakeExercises
+        Log.d(TAG, "addExercise: ${exercises.value}")
     }
 
     override suspend fun deleteExercise(exercise: Exercise) {
