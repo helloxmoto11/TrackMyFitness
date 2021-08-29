@@ -10,10 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.manuelcaravantes.trackmyfitness.R
 import com.manuelcaravantes.trackmyfitness.data.model.FakeWorkout
 import com.manuelcaravantes.trackmyfitness.data.model.Workout
 import com.manuelcaravantes.trackmyfitness.data.util.TAG
@@ -38,13 +41,15 @@ fun MainScreen(
         date.value?.let {
             TodayRow(
                 it,
-            onIncrementDate = { mainScreenViewModel.onIncrementDate() },
-            onDecrementDate = { mainScreenViewModel.onDecrementDate() })
+                onIncrementDate = { mainScreenViewModel.onIncrementDate() },
+                onDecrementDate = { mainScreenViewModel.onDecrementDate() })
         }
         workouts.value?.let {
-            for (workout in it) {
-                WorkoutCard(workout = workout)
-            }
+            if (it.isNotEmpty()) {
+                for (workout in it) {
+                    WorkoutCard(workout = workout)
+                }
+            } else EmptyMessage()
         }
     }
 }
@@ -75,12 +80,14 @@ fun WorkoutCard(
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
-            Row(Modifier.fillMaxWidth(),
+            Row(
+                Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = workout.name,
+                Text(
+                    text = workout.name,
                     style = MaterialTheme.typography.h6
-                    )
+                )
                 Checkbox(
                     checked = true,
                     onCheckedChange = { /**DO SOMETHING HERE**/ }
@@ -126,6 +133,38 @@ fun TodayRow(
             Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = null)
         }
     }
+}
+
+@Composable
+fun EmptyMessage() {
+    Column(
+        Modifier
+            .fillMaxSize()
+    ) {
+        Spacer(modifier = Modifier.height(72.dp))
+        Icon(
+            painter = painterResource(id = R.drawable.ic_error),
+            contentDescription = "error Icon",
+            modifier = Modifier
+                .size(64.dp)
+                .align(Alignment.CenterHorizontally)
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+        Text(
+            text = stringResource(id = R.string.empty_log_message),
+            style = MaterialTheme.typography.h6,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+        
+        )
+    }
+}
+
+@Preview
+@Composable
+fun PreviewEmptyMessage() {
+    EmptyMessage()
+
 }
 
 @Preview(showBackground = true)

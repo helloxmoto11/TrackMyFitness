@@ -31,7 +31,7 @@ class MainScreenViewModel @Inject constructor(
     //this is temporary
     init {
         viewModelScope.launch {
-            _workouts.value = workoutRepository.getWorkouts()
+           setWorkouts(LocalDate.now())
         }
     }
 
@@ -47,6 +47,7 @@ class MainScreenViewModel @Inject constructor(
             TODAY
         } else formatDate(nextDay)
         _stringDate.value = nextDayAsString
+        setWorkouts(nextDay)
     }
 
     fun onDecrementDate() {
@@ -57,5 +58,12 @@ class MainScreenViewModel @Inject constructor(
             TODAY
         } else formatDate(prevDay)
         _stringDate.value = prevDayAsString
+        setWorkouts(prevDay)
+    }
+
+    private fun setWorkouts(date: LocalDate) {
+        viewModelScope.launch {
+            _workouts.value = workoutRepository.getWorkouts(date)
+        }
     }
 }
