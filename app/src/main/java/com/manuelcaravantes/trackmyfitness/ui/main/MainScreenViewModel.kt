@@ -39,9 +39,7 @@ class MainScreenViewModel @Inject constructor(
         val current = _date.value!!
         val nextDay = current.plusDays(1)
         _date.value = nextDay
-        val nextDayAsString = if (nextDay.isEqual(LocalDate.now())) {
-            TODAY
-        } else formatDate(nextDay)
+        val nextDayAsString = formatDate(nextDay)
         _stringDate.value = nextDayAsString
         setWorkouts(nextDay)
     }
@@ -50,9 +48,7 @@ class MainScreenViewModel @Inject constructor(
         val current = _date.value!!
         val prevDay = current.minusDays(1)
         _date.value = prevDay
-        val prevDayAsString = if (prevDay.isEqual(LocalDate.now())) {
-            TODAY
-        } else formatDate(prevDay)
+        val prevDayAsString = formatDate(prevDay)
         _stringDate.value = prevDayAsString
         setWorkouts(prevDay)
     }

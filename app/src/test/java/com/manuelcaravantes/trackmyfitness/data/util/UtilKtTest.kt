@@ -3,6 +3,7 @@ package com.manuelcaravantes.trackmyfitness.data.util
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import java.time.LocalDate
+import java.time.Month
 
 class UtilKtTest {
 
@@ -44,11 +45,17 @@ class UtilKtTest {
 
     @Test
     fun checkDateFormatter() {
-        val dateIn = LocalDate.of(2021, 8, 23)
-        val dateOut = formatDate(dateIn)
+        val today = LocalDate.now()
+        val tomorrow = today.plusDays(1)
+        val yesterday = today.minusDays(1)
 
-        val result = "Monday, Aug 23rd"
+        val date = LocalDate.of(2021, Month.AUGUST, 4)
+        val result = "Wednesday, Aug 4th"
 
-        assertThat(dateOut).matches(result)
+
+        assertThat(formatDate(tomorrow)).matches(TOMORROW)
+        assertThat(formatDate(yesterday)).matches(YESTERDAY)
+        assertThat(formatDate(today)).matches(TODAY)
+        assertThat(formatDate(date)).matches(result)
     }
 }
