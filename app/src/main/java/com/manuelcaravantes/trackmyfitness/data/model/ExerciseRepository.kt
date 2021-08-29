@@ -24,13 +24,9 @@ class FakeExerciseRepository @Inject constructor(): ExerciseRepository {
         get() = _exercises
 
     override suspend fun getExercises(date: LocalDate){
-        Log.d(TAG, "getExercises: Date: $date")
-        Log.d(TAG, "getExercises: ${exercises.value}")
         val e = fakeExercises().filter {
-            Log.d(TAG, "getExercises: exersice is $it")
             it.date == date.toString()
         }
-        Log.d(TAG, "getExercises: ${e.toString()}")
         _exercises.value = e.toMutableList()
     }
 

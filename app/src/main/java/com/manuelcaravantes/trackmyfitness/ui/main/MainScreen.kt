@@ -1,6 +1,5 @@
 package com.manuelcaravantes.trackmyfitness.ui.main
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -19,7 +18,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.manuelcaravantes.trackmyfitness.R
 import com.manuelcaravantes.trackmyfitness.data.model.Exercise
 import com.manuelcaravantes.trackmyfitness.data.model.fakeExercise
-import com.manuelcaravantes.trackmyfitness.data.util.TAG
 
 
 @ExperimentalMaterialApi
@@ -31,8 +29,6 @@ fun MainScreen(
     val workouts = mainScreenViewModel.exercises.observeAsState()
     val date = mainScreenViewModel.date.observeAsState()
 
-    Log.d(TAG, "MainScreen: ${date.value}")
-    Log.d(TAG, "MainScreen: $date")
     Column(
         modifier
             .fillMaxSize()
