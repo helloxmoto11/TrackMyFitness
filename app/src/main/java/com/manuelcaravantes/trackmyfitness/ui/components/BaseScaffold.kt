@@ -9,18 +9,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import com.manuelcaravantes.trackmyfitness.BottomBar
 import com.manuelcaravantes.trackmyfitness.Fab
 import com.manuelcaravantes.trackmyfitness.R
 import com.manuelcaravantes.trackmyfitness.TopBar
+import com.manuelcaravantes.trackmyfitness.ui.addexercise.AddExerciseScreen
+import com.manuelcaravantes.trackmyfitness.ui.main.MainScreen
 
 
 @ExperimentalMaterialApi
 @Composable
 fun ScreenScaffold(
     screenName: String = stringResource(id = R.string.app_name),
-    screen: @Composable (Modifier) -> Unit,
-    showFab: Boolean = true
+    showFab: Boolean = true,
+    navController: NavHostController
 ) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
@@ -32,8 +37,19 @@ fun ScreenScaffold(
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center,
         drawerContent = {}
-    ) {
-        screen(Modifier.padding(it))
-
+    ) { paddingValues ->
+        NavHost(
+            navController = navController,
+            startDestination = "MAINSCREEN",
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            composable("MAINSCREEN") {
+                //val viewModel = hiltViewModel<MainScreenViewModel>()
+                MainScreen()
+            }
+            composable("AddScreen") {
+                AddExerciseScreen()
+            }
+        }
     }
 }
