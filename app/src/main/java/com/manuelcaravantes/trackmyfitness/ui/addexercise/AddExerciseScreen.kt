@@ -18,8 +18,10 @@ import com.manuelcaravantes.trackmyfitness.ui.theme.TrackMyFitnessTheme
 fun AddExerciseScreen(
     modifier: Modifier = Modifier,
     addExerciseScreenViewModel: AddExerciseScreenViewModel? = null,
-    update: Boolean = false
+    update: Boolean = false,
+    showFab: (Boolean) -> Unit = {false}
 ) {
+    showFab(false)
     Column(
         modifier = modifier
             .fillMaxSize()

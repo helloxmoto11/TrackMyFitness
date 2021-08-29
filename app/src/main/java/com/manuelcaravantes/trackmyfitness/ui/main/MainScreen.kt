@@ -24,8 +24,10 @@ import com.manuelcaravantes.trackmyfitness.data.model.fakeExercise
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    mainScreenViewModel: MainScreenViewModel = hiltViewModel()
+    mainScreenViewModel: MainScreenViewModel = hiltViewModel(),
+    showFab: (Boolean) -> Unit = {true}
 ) {
+    showFab(true)
     val workouts = mainScreenViewModel.exercises.observeAsState()
     val date = mainScreenViewModel.date.observeAsState()
 

@@ -3,6 +3,7 @@ package com.manuelcaravantes.trackmyfitness
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -13,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.manuelcaravantes.trackmyfitness.ui.components.ScreenScaffold
 import com.manuelcaravantes.trackmyfitness.ui.theme.TrackMyFitnessTheme
@@ -23,6 +25,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    @ExperimentalAnimationApi
     @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,14 +40,12 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
 fun MainLayout() {
     val navController = rememberNavController()
-
     ScreenScaffold(navController = navController)
-
 }
 
 @Composable
@@ -75,13 +76,18 @@ fun BottomBar(
     }
 }
 
+@ExperimentalAnimationApi
 @Composable
-fun Fab() {
-    FloatingActionButton(onClick = { /*TODO*/ }) {
+fun Fab(navController: NavController) {
+
+    FloatingActionButton(onClick = { navController.navigate("AddScreen") }
+    ) {
         Icon(imageVector = Icons.Default.Add, contentDescription = "Fab")
     }
+
 }
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Preview
 @Composable

@@ -1,39 +1,49 @@
 package com.manuelcaravantes.trackmyfitness.ui.components
 
+import android.util.Log
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FabPosition
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.manuelcaravantes.trackmyfitness.BottomBar
 import com.manuelcaravantes.trackmyfitness.Fab
-import com.manuelcaravantes.trackmyfitness.R
 import com.manuelcaravantes.trackmyfitness.TopBar
+import com.manuelcaravantes.trackmyfitness.data.util.TAG
 import com.manuelcaravantes.trackmyfitness.ui.addexercise.AddExerciseScreen
 import com.manuelcaravantes.trackmyfitness.ui.main.MainScreen
 
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
 fun ScreenScaffold(
-    screenName: String = stringResource(id = R.string.app_name),
-    showFab: Boolean = true,
     navController: NavHostController
 ) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
+
+    var showFab by remember {
+        mutableStateOf(true)
+    }
+    Log.d(TAG, "ScreenScaffold: show Fab = $showFab")
+    val onFabVisChange: (Boolean) -> Unit = { showFab = it }
+
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { TopBar() },
         bottomBar = { BottomBar(scaffoldState, scope) },
-        floatingActionButton = { if (showFab) Fab() },
+        floatingActionButton = {
+            if (showFab) {
+                Fab(navController)
+            }
+        },
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center,
         drawerContent = {}
@@ -45,10 +55,10 @@ fun ScreenScaffold(
         ) {
             composable("MAINSCREEN") {
                 //val viewModel = hiltViewModel<MainScreenViewModel>()
-                MainScreen()
+                MainScreen(showFab = onFabVisChange)
             }
             composable("AddScreen") {
-                AddExerciseScreen()
+                AddExerciseScreen(showFab = onFabVisChange)
             }
         }
     }
