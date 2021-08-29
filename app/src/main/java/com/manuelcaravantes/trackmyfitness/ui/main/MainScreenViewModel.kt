@@ -14,10 +14,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
-    private val workoutRepository: FakeExerciseRepository
+    private val repository: FakeExerciseRepository
 ) : ViewModel() {
 
-    val exercises = workoutRepository.exercises
+    val exercises = repository.exercises
 
     private val _date = MutableLiveData(LocalDate.now())
     private val _stringDate = MutableLiveData(TODAY)
@@ -59,7 +59,7 @@ class MainScreenViewModel @Inject constructor(
 
     private fun setWorkouts(date: LocalDate) {
         viewModelScope.launch {
-            workoutRepository.getExercises(date)
+            repository.getExercises(date)
         }
     }
 }
