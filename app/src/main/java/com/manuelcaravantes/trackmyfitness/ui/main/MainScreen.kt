@@ -68,13 +68,13 @@ fun PreviewMainScreen() {
 @ExperimentalMaterialApi
 @Composable
 fun WorkoutCard(
-    fitnessActivity: FitnessActivity = fakeExercise()
+    fitnessActivity: FitnessActivity = fakeExercise(1,"2020-09-01")
 ) {
 
     Card(
         onClick = { /*TODO*/ },
         modifier = Modifier.padding(bottom = 4.dp),
-        elevation = 8.dp
+        elevation = 2.dp
     ) {
         Column(
             Modifier

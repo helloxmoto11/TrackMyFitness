@@ -1,12 +1,11 @@
 package com.manuelcaravantes.trackmyfitness.ui.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.manuelcaravantes.trackmyfitness.data.model.FitnessActivityRepository
-import com.manuelcaravantes.trackmyfitness.data.util.TAG
+import com.manuelcaravantes.trackmyfitness.data.model.fakeExercises
 import com.manuelcaravantes.trackmyfitness.data.util.TODAY
 import com.manuelcaravantes.trackmyfitness.data.util.formatDate
 import com.manuelcaravantes.trackmyfitness.di.FitnessRepository
@@ -26,12 +25,19 @@ class MainScreenViewModel @Inject constructor(
     private val _stringDate = MutableLiveData(TODAY)
     val date: LiveData<String> get() = _stringDate
 
-    val activities = repository.getAllActivities()
+    var activities = repository.getActivitiesByDate(LocalDate.now().toString())
     //private val _activities = MutableLiveData<List<FitnessActivity>> (listOf())
     //val activities: LiveData<List<FitnessActivity>> get() = _activities
 
+    //for testing only
     init {
-        Log.d(TAG, "init: ${repository.getAllActivities().value}")
+        viewModelScope.launch {
+//            val today = LocalDate.now().toString()
+//            repository.addActivity(fakeExercise(1,today))
+//            val tomorrow = LocalDate.now().plusDays(1).toString()
+//            repository.addActivity(fakeExercise(2,tomorrow))
+            for (workout in fakeExercises()) repository.addActivity(workout)
+        }
     }
 
     /**
@@ -57,7 +63,7 @@ class MainScreenViewModel @Inject constructor(
 
     private fun setWorkouts(date: LocalDate) {
         viewModelScope.launch {
-            // TODO: 8/30/2021
+            activities = repository.getActivitiesByDate(date.toString())
         }
     }
 }
