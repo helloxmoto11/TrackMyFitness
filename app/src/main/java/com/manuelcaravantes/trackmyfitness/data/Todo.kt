@@ -4,7 +4,8 @@ package com.manuelcaravantes.trackmyfitness.data
  *
  * A todo list to keep me on track.
  */
-// TODO: 8/29/2021 convert Main Column into Lazy Column to take any number of Cards.
+// TODO: 8/29/2021 convert Main Column into Lazy Column to take any number of Cards. -complete stil have testing to do.
+
 // TODO: 8/29/2021 update Activity/Exercise Schema
 // TODO: 8/29/2021 create Activity/Exercise detail screen.
 // TODO: 8/29/2021 refactor add screen

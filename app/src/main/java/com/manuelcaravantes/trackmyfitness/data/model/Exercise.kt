@@ -6,7 +6,8 @@ data class Exercise(
     var time: String = "",
     var distance: Float = 0f,
     var details: String = "",
-    var date: String = ""
+    var date: String = "",
+    var completed: Boolean = true
 )
 
 
@@ -30,7 +31,8 @@ fun fakeExercises(): MutableList<Exercise> {
         "00:45",
         0f,
         "Back and Biceps.",
-        "2021-08-28"
+        "2021-08-28",
+        false
     )
     val w3 = Exercise(
         3,
@@ -38,7 +40,8 @@ fun fakeExercises(): MutableList<Exercise> {
         "00:25",
         1f,
         "Swam in the pool.",
-        "2021-08-28"
+        "2021-08-28",
+        false
     )
 
     val w4 = Exercise(
@@ -65,8 +68,32 @@ fun fakeExercises(): MutableList<Exercise> {
         "LEG DAY!!",
         "2021-08-29"
     )
+    val w7 = Exercise(
+        6,
+        "Elliptical",
+        "00:45",
+        3f,
+        "Bit of cardio.",
+        "2021-08-29"
+    )
+    val w8 = Exercise(
+        6,
+        "Hiking",
+        "02:25",
+        6.5f,
+        "Went for a hike.",
+        "2021-08-29"
+    )
+    val w9 = Exercise(
+        6,
+        "Gym",
+        "00:25",
+        1f,
+        "Push!!",
+        "2021-08-30"
+    )
     return mutableListOf(
-        w1, w2, w3, w4, w5, w6
+        w1, w2, w3, w4, w5, w6, w7, w8, w9
     )
 }
 

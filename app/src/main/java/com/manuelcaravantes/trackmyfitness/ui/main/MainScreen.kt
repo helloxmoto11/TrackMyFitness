@@ -1,6 +1,7 @@
 package com.manuelcaravantes.trackmyfitness.ui.main
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -33,7 +34,7 @@ fun MainScreen(
     Column(
         modifier
             .fillMaxSize()
-            .padding(8.dp)
+            .padding(horizontal = 16.dp)
     ) {
         date.value?.let {
             TodayRow(
@@ -41,10 +42,12 @@ fun MainScreen(
                 onIncrementDate = { mainScreenViewModel.onIncrementDate() },
                 onDecrementDate = { mainScreenViewModel.onDecrementDate() })
         }
-        workouts.value?.let {
-            if (it.isNotEmpty()) {
-                for (workout in it) {
-                    WorkoutCard(exercise = workout)
+        workouts.value?.let { workoutList ->
+            if (workoutList.isNotEmpty()) {
+                LazyColumn{
+                    items(workoutList.size) {
+                        WorkoutCard(exercise = workoutList[it])
+                    }
                 }
             } else EmptyMessage()
         }
@@ -52,12 +55,12 @@ fun MainScreen(
 }
 
 
-@ExperimentalMaterialApi
-@Preview(showBackground = true)
-@Composable
-fun PreviewMainScreen() {
-    MainScreen()
-}
+//@ExperimentalMaterialApi
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewMainScreen() {
+//    MainScreen()
+//}
 
 
 //extract this card to be reusable. maybe keep in own file.
@@ -67,6 +70,7 @@ fun PreviewMainScreen() {
 fun WorkoutCard(
     exercise: Exercise = fakeExercise()
 ) {
+
     Card(
         onClick = { /*TODO*/ },
         modifier = Modifier.padding(bottom = 4.dp),
@@ -87,7 +91,7 @@ fun WorkoutCard(
                 )
                 Checkbox(
                     checked = true,
-                    onCheckedChange = { /**DO SOMETHING HERE**/ }
+                    onCheckedChange = { /**do something her**/ }
                 )
             }
             Text(text = "Time: ${exercise.time}")
@@ -99,7 +103,7 @@ fun WorkoutCard(
 }
 
 @ExperimentalMaterialApi
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun PreviewWorkoutCard() {
     WorkoutCard()
@@ -157,11 +161,10 @@ fun EmptyMessage() {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun PreviewEmptyMessage() {
     EmptyMessage()
-
 }
 
 @Preview(showBackground = true)
