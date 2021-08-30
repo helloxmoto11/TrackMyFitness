@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.manuelcaravantes.trackmyfitness.data.model.FitnessActivity
 import com.manuelcaravantes.trackmyfitness.data.model.FitnessActivityRepository
 import com.manuelcaravantes.trackmyfitness.data.model.fakeExercises
 import com.manuelcaravantes.trackmyfitness.data.util.TODAY
@@ -32,10 +33,6 @@ class MainScreenViewModel @Inject constructor(
     //for testing only
     init {
         viewModelScope.launch {
-//            val today = LocalDate.now().toString()
-//            repository.addActivity(fakeExercise(1,today))
-//            val tomorrow = LocalDate.now().plusDays(1).toString()
-//            repository.addActivity(fakeExercise(2,tomorrow))
             for (workout in fakeExercises()) repository.addActivity(workout)
         }
     }
@@ -59,6 +56,12 @@ class MainScreenViewModel @Inject constructor(
         val prevDayAsString = formatDate(prevDay)
         _stringDate.value = prevDayAsString
         setWorkouts(prevDay)
+    }
+
+    fun onCheckedChange(fitnessActivity: FitnessActivity)  {
+        viewModelScope.launch {
+            repository.updateActivity(fitnessActivity)
+        }
     }
 
     private fun setWorkouts(date: LocalDate) {

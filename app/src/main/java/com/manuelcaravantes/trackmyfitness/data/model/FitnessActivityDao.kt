@@ -18,7 +18,7 @@ interface FitnessActivityDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFitnessActivity(fitnessActivity: FitnessActivity)
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
+    @Update()
     suspend fun updateFitnessActivity(fitnessActivity: FitnessActivity)
 
     @Delete

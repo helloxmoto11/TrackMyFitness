@@ -1,8 +1,6 @@
 package com.manuelcaravantes.trackmyfitness.data.model
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import com.manuelcaravantes.trackmyfitness.data.util.TAG
 import javax.inject.Inject
 
 class FitnessActivityRepositoryImpl @Inject constructor(
@@ -23,7 +21,6 @@ class FitnessActivityRepositoryImpl @Inject constructor(
     }
 
     override suspend fun addActivity(fitnessActivity: FitnessActivity) {
-        Log.d(TAG, "addActivity: repository")
         fitnessActivityDao.insertFitnessActivity(fitnessActivity)
     }
 
