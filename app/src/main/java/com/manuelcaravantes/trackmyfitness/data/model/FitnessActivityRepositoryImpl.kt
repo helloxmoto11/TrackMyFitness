@@ -8,30 +8,31 @@ class FitnessActivityRepositoryImpl @Inject constructor(
 ): FitnessActivityRepository {
 
     override  fun getAllActivities(): LiveData<List<FitnessActivity>> {
-        TODO("Not yet implemented")
+        return fitnessActivityDao.getAllFitnessActivities()
     }
 
-    override  fun getActivityByDate(date: String): LiveData<List<FitnessActivity>> {
-        TODO("Not yet implemented")
+    override  fun getActivitiesByDate(date: String): LiveData<List<FitnessActivity>> {
+        return fitnessActivityDao.getFitnessActivitiesByDate(date)
     }
+
 
     override  fun searchActivitiesByName(name: String): LiveData<List<FitnessActivity>> {
-        TODO("Not yet implemented")
+        return fitnessActivityDao.searchFitnessActivitiesByName(name)
     }
 
     override suspend fun addActivity(fitnessActivity: FitnessActivity) {
-        TODO("Not yet implemented")
+        fitnessActivityDao.insertFitnessActivity(fitnessActivity)
     }
 
     override suspend fun deleteActivity(fitnessActivity: FitnessActivity) {
-        TODO("Not yet implemented")
+        fitnessActivityDao.deleteFitnessActivity(fitnessActivity)
     }
 
     override suspend fun deleteAllActivities() {
-        TODO("Not yet implemented")
+        fitnessActivityDao.deleteAllActivities()
     }
 
     override suspend fun updateActivity(fitnessActivity: FitnessActivity) {
-        TODO("Not yet implemented")
+        fitnessActivityDao.updateFitnessActivity(fitnessActivity)
     }
 }

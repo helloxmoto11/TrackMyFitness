@@ -6,7 +6,7 @@ interface FitnessActivityRepository {
 
     fun getAllActivities(): LiveData<List<FitnessActivity>>
 
-    fun getActivityByDate(date: String): LiveData<List<FitnessActivity>>
+    fun getActivitiesByDate(date: String): LiveData<List<FitnessActivity>>
 
     fun searchActivitiesByName(name: String): LiveData<List<FitnessActivity>>
 

@@ -26,7 +26,10 @@ abstract class DatabaseModule {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): RoomDatabase {
-        return Room.inMemoryDatabaseBuilder(context, TrackMyFitnessDb::class.java).build()
+        return Room.inMemoryDatabaseBuilder(
+            context,
+            TrackMyFitnessDb::class.java)
+            .build()
     }
 
     @FitnessRepository
@@ -43,4 +46,13 @@ abstract class DatabaseModule {
 annotation class FakeRepository
 @Qualifier
 annotation class FitnessRepository
+
+//object CALLBACK: RoomDatabase.Callback(){
+//    override fun onCreate(db: SupportSQLiteDatabase) {
+//        super.onCreate(db)
+//        runBlocking(Dispatchers.IO) {
+//
+//        }
+//    }
+//}
 

@@ -10,7 +10,7 @@ class FakeActivityRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun getActivityByDate(date: String): LiveData<List<FitnessActivity>> {
+    override fun getActivitiesByDate(date: String): LiveData<List<FitnessActivity>> {
         TODO("Not yet implemented")
     }
 
