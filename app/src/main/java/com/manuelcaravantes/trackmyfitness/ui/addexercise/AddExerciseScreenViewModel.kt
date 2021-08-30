@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.manuelcaravantes.trackmyfitness.data.model.Exercise
-import com.manuelcaravantes.trackmyfitness.data.model.FakeExerciseRepository
+import com.manuelcaravantes.trackmyfitness.data.model.FitnessActivity
+import com.manuelcaravantes.trackmyfitness.data.model.FakeFitnessActivityRepository
 import com.manuelcaravantes.trackmyfitness.data.util.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,21 +15,21 @@ import kotlin.random.Random
 
 @HiltViewModel
 class AddExerciseScreenViewModel @Inject constructor(
-    private val repository: FakeExerciseRepository
+    private val repository: FakeFitnessActivityRepository
 ) : ViewModel() {
 
-    private val _screenData = MutableLiveData(AddExerciseScreenState(Exercise()))
-    val screenData: LiveData<AddExerciseScreenState<Exercise>> = _screenData
+    private val _screenData = MutableLiveData(AddExerciseScreenState(FitnessActivity()))
+    val screenData: LiveData<AddExerciseScreenState<FitnessActivity>> = _screenData
 
-    fun onDataChange(exercise: Exercise) {
-        Log.d(TAG, "onDataChange: exercise is $exercise")
-        val e = exercise.copy(
+    fun onDataChange(fitnessActivity: FitnessActivity) {
+        Log.d(TAG, "onDataChange: exercise is $fitnessActivity")
+        val e = fitnessActivity.copy(
             id = Random.nextInt(),
-            name = exercise.name,
-            time = exercise.time,
-            distance = exercise.distance,
-            date = exercise.date,
-            details = exercise.details
+            name = fitnessActivity.name,
+            time = fitnessActivity.time,
+            distance = fitnessActivity.distance,
+            date = fitnessActivity.date,
+            details = fitnessActivity.details
         )
 
         _screenData.value = AddExerciseScreenState(e)
@@ -37,7 +37,7 @@ class AddExerciseScreenViewModel @Inject constructor(
 
     fun onAddExercise() {
         viewModelScope.launch {
-            repository.addExercise(_screenData.value!!.value)
+            repository.addActivity(_screenData.value!!.value)
         }
     }
 

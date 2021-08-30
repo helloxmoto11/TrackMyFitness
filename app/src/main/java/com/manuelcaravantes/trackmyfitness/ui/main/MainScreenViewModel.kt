@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.manuelcaravantes.trackmyfitness.data.model.FakeExerciseRepository
+import com.manuelcaravantes.trackmyfitness.data.model.FakeFitnessActivityRepository
 import com.manuelcaravantes.trackmyfitness.data.util.TODAY
 import com.manuelcaravantes.trackmyfitness.data.util.formatDate
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
-    private val repository: FakeExerciseRepository
+    private val repository: FakeFitnessActivityRepository
 ) : ViewModel() {
 
     val exercises = repository.exercises
@@ -55,7 +55,7 @@ class MainScreenViewModel @Inject constructor(
 
     private fun setWorkouts(date: LocalDate) {
         viewModelScope.launch {
-            repository.getExercises(date)
+            repository.getActivity(date)
         }
     }
 }

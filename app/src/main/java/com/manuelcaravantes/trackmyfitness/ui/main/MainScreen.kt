@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.manuelcaravantes.trackmyfitness.R
-import com.manuelcaravantes.trackmyfitness.data.model.Exercise
+import com.manuelcaravantes.trackmyfitness.data.model.FitnessActivity
 import com.manuelcaravantes.trackmyfitness.data.model.fakeExercise
 
 
@@ -46,7 +46,7 @@ fun MainScreen(
             if (workoutList.isNotEmpty()) {
                 LazyColumn{
                     items(workoutList.size) {
-                        WorkoutCard(exercise = workoutList[it])
+                        WorkoutCard(fitnessActivity = workoutList[it])
                     }
                 }
             } else EmptyMessage()
@@ -68,7 +68,7 @@ fun MainScreen(
 @ExperimentalMaterialApi
 @Composable
 fun WorkoutCard(
-    exercise: Exercise = fakeExercise()
+    fitnessActivity: FitnessActivity = fakeExercise()
 ) {
 
     Card(
@@ -86,7 +86,7 @@ fun WorkoutCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = exercise.name,
+                    text = fitnessActivity.name,
                     style = MaterialTheme.typography.h6
                 )
                 Checkbox(
@@ -94,9 +94,9 @@ fun WorkoutCard(
                     onCheckedChange = { /**do something her**/ }
                 )
             }
-            Text(text = "Time: ${exercise.time}")
-            Text(text = "Distance: ${exercise.distance}")
-            Text(text = "Details: ${exercise.details}")
+            Text(text = "Time: ${fitnessActivity.time}")
+            Text(text = "Distance: ${fitnessActivity.distance}")
+            Text(text = "Details: ${fitnessActivity.details}")
         }
     }
 

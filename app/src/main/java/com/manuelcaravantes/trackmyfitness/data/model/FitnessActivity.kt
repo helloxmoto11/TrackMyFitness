@@ -1,13 +1,22 @@
 package com.manuelcaravantes.trackmyfitness.data.model
 
-data class Exercise(
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "activity_table")
+data class FitnessActivity(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "row_id")
     var id: Int = -1,
     var name: String = "",
     var time: String = "",
     var distance: Float = 0f,
     var details: String = "",
     var date: String = "",
-    var completed: Boolean = true
+    var completed: Boolean = true,
+    var photoUri: String = "",
+    val timeStamp: Long = -1L
 )
 
 
@@ -16,8 +25,9 @@ data class Exercise(
 
 
 
-fun fakeExercises(): MutableList<Exercise> {
-    val w1 = Exercise(
+
+fun fakeExercises(): MutableList<FitnessActivity> {
+    val w1 = FitnessActivity(
         1,
         "Running",
         "00:45",
@@ -25,7 +35,7 @@ fun fakeExercises(): MutableList<Exercise> {
         "Ran around the neighborhood.",
         "2021-08-28"
     )
-    val w2 = Exercise(
+    val w2 = FitnessActivity(
         2,
         "Gym",
         "00:45",
@@ -34,7 +44,7 @@ fun fakeExercises(): MutableList<Exercise> {
         "2021-08-28",
         false
     )
-    val w3 = Exercise(
+    val w3 = FitnessActivity(
         3,
         "Swimming",
         "00:25",
@@ -44,7 +54,7 @@ fun fakeExercises(): MutableList<Exercise> {
         false
     )
 
-    val w4 = Exercise(
+    val w4 = FitnessActivity(
         4,
         "Rowing",
         "00:45",
@@ -52,7 +62,7 @@ fun fakeExercises(): MutableList<Exercise> {
         "Spent some time on the rower.",
         "2021-08-29"
     )
-    val w5 = Exercise(
+    val w5 = FitnessActivity(
         5,
         "Walking",
         "00:45",
@@ -60,7 +70,7 @@ fun fakeExercises(): MutableList<Exercise> {
         "Went for a Walk",
         "2021-08-29"
     )
-    val w6 = Exercise(
+    val w6 = FitnessActivity(
         6,
         "Gym",
         "00:25",
@@ -68,7 +78,7 @@ fun fakeExercises(): MutableList<Exercise> {
         "LEG DAY!!",
         "2021-08-29"
     )
-    val w7 = Exercise(
+    val w7 = FitnessActivity(
         6,
         "Elliptical",
         "00:45",
@@ -76,7 +86,7 @@ fun fakeExercises(): MutableList<Exercise> {
         "Bit of cardio.",
         "2021-08-29"
     )
-    val w8 = Exercise(
+    val w8 = FitnessActivity(
         6,
         "Hiking",
         "02:25",
@@ -84,7 +94,7 @@ fun fakeExercises(): MutableList<Exercise> {
         "Went for a hike.",
         "2021-08-29"
     )
-    val w9 = Exercise(
+    val w9 = FitnessActivity(
         6,
         "Gym",
         "00:25",
@@ -97,6 +107,6 @@ fun fakeExercises(): MutableList<Exercise> {
     )
 }
 
-fun fakeExercise(): Exercise {
-    return Exercise(1, "Jogging", "00:55", 5f, "Ran around the block", "Today")
+fun fakeExercise(): FitnessActivity {
+    return FitnessActivity(1, "Jogging", "00:55", 5f, "Ran around the block", "Today")
 }
