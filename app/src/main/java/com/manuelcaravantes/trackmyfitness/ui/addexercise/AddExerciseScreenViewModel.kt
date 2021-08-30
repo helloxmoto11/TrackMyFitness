@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.manuelcaravantes.trackmyfitness.data.model.FitnessActivity
-import com.manuelcaravantes.trackmyfitness.data.model.FakeFitnessActivityRepository
 import com.manuelcaravantes.trackmyfitness.data.util.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,7 +14,7 @@ import kotlin.random.Random
 
 @HiltViewModel
 class AddExerciseScreenViewModel @Inject constructor(
-    private val repository: FakeFitnessActivityRepository
+
 ) : ViewModel() {
 
     private val _screenData = MutableLiveData(AddExerciseScreenState(FitnessActivity()))
@@ -37,7 +36,7 @@ class AddExerciseScreenViewModel @Inject constructor(
 
     fun onAddExercise() {
         viewModelScope.launch {
-            repository.addActivity(_screenData.value!!.value)
+            // TODO: 8/30/2021
         }
     }
 

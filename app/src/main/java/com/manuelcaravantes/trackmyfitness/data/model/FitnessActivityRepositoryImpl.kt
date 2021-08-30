@@ -1,15 +1,21 @@
 package com.manuelcaravantes.trackmyfitness.data.model
 
-import java.time.LocalDate
+import androidx.lifecycle.LiveData
+import javax.inject.Inject
 
-class FitnessActivityRepositoryImpl(
+class FitnessActivityRepositoryImpl @Inject constructor(
     private val fitnessActivityDao: FitnessActivityDao
 ): FitnessActivityRepository {
-    override suspend fun getActivity(date: LocalDate) {
+
+    override  fun getAllActivities(): LiveData<List<FitnessActivity>> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getAllActivities() {
+    override  fun getActivityByDate(date: String): LiveData<List<FitnessActivity>> {
+        TODO("Not yet implemented")
+    }
+
+    override  fun searchActivitiesByName(name: String): LiveData<List<FitnessActivity>> {
         TODO("Not yet implemented")
     }
 
@@ -18,6 +24,10 @@ class FitnessActivityRepositoryImpl(
     }
 
     override suspend fun deleteActivity(fitnessActivity: FitnessActivity) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteAllActivities() {
         TODO("Not yet implemented")
     }
 

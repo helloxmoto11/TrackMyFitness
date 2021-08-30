@@ -20,12 +20,6 @@ data class FitnessActivity(
 )
 
 
-
-
-
-
-
-
 fun fakeExercises(): MutableList<FitnessActivity> {
     val w1 = FitnessActivity(
         1,
