@@ -3,6 +3,7 @@ package com.manuelcaravantes.trackmyfitness.data.model
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
+@Dao
 interface FitnessActivityDao {
 
     @Query("SELECT * FROM activity_table")

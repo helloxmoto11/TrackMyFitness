@@ -102,5 +102,5 @@ fun fakeExercises(): MutableList<FitnessActivity> {
 }
 
 fun fakeExercise(): FitnessActivity {
-    return FitnessActivity(1, "Jogging", "00:55", 5f, "Ran around the block", "Today")
+    return FitnessActivity(1, "Jogging", "00:55", 5f, "Ran around the block", "2021-08-30")
 }

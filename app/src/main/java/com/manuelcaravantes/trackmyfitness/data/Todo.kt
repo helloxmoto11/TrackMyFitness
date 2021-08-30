@@ -2,7 +2,7 @@ package com.manuelcaravantes.trackmyfitness.data
 
 /**
  *
- * A todo list to keep me on track.
+ *   a  list to keep me on track.
  */
 // TODO: 8/29/2021 convert Main Column into Lazy Column to take any number of Cards. -complete stil have testing to do.
 

@@ -29,7 +29,7 @@ fun MainScreen(
 
 ) {
     val date = mainScreenViewModel.date.observeAsState()
-    val workouts = mainScreenViewModel.exercises.observeAsState()
+    val activities = mainScreenViewModel.activities.observeAsState()
 
     Column(
         modifier
@@ -42,7 +42,7 @@ fun MainScreen(
                 onIncrementDate = { mainScreenViewModel.onIncrementDate() },
                 onDecrementDate = { mainScreenViewModel.onDecrementDate() })
         }
-        workouts.value?.let { workoutList ->
+        activities.value?.let { workoutList ->
             if (workoutList.isNotEmpty()) {
                 LazyColumn{
                     items(workoutList.size) {
@@ -55,12 +55,12 @@ fun MainScreen(
 }
 
 
-//@ExperimentalMaterialApi
-//@Preview(showBackground = true)
-//@Composable
-//fun PreviewMainScreen() {
-//    MainScreen()
-//}
+@ExperimentalMaterialApi
+@Preview(showBackground = true)
+@Composable
+fun PreviewMainScreen() {
+    MainScreen()
+}
 
 
 //extract this card to be reusable. maybe keep in own file.
