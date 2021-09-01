@@ -1,5 +1,6 @@
 package com.manuelcaravantes.trackmyfitness.ui.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,10 +16,13 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
 
+private const val TAG = "MainScreenViewModel"
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
     @FitnessRepository private val repository: FitnessActivityRepository
 ) : ViewModel() {
+
+
 
     // TODO: 8/30/2021   val exercises = repository.exercises
 
@@ -61,6 +65,7 @@ class MainScreenViewModel @Inject constructor(
     fun onCheckedChange(fitnessActivity: FitnessActivity)  {
         viewModelScope.launch {
             repository.updateActivity(fitnessActivity)
+            Log.d(TAG, "onCheckedChange: repository updated")
         }
     }
 

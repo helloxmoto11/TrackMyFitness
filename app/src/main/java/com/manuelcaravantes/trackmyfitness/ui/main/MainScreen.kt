@@ -3,6 +3,7 @@ package com.manuelcaravantes.trackmyfitness.ui.main
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -17,22 +18,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.manuelcaravantes.trackmyfitness.R
 import com.manuelcaravantes.trackmyfitness.data.model.FitnessActivity
 import com.manuelcaravantes.trackmyfitness.data.model.fakeExercise
-import com.manuelcaravantes.trackmyfitness.data.util.TAG
 
+private const val TAG = "MainScreen"
 
 @ExperimentalMaterialApi
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
     mainScreenViewModel: MainScreenViewModel = hiltViewModel(),
-
 ) {
     val date = mainScreenViewModel.date.observeAsState()
-    val activities = mainScreenViewModel.activities.observeAsState()
-    Log.d(TAG, "MainScreen.Kt: ${activities.value}")
+    val activities by mainScreenViewModel.activities.observeAsState()
+
 
     Column(
         modifier
@@ -45,17 +46,14 @@ fun MainScreen(
                 onIncrementDate = { mainScreenViewModel.onIncrementDate() },
                 onDecrementDate = { mainScreenViewModel.onDecrementDate() })
         }
-        activities.value?.let { list ->
+        activities?.let { list ->
             if (list.isNotEmpty()) {
-                LazyColumn{
-                    items(list.size) { index ->
-                        WorkoutCard(
-                            fitnessActivity = list[index],
-                            onCheckedChange = { a, b ->
-                                a.completed = b
-                                mainScreenViewModel.onCheckedChange(a)
-                            }
-                        )
+                LazyColumn {
+                    items(list) { activity ->
+                        WorkoutCard(activity) {
+                            activity.completed = it
+                            mainScreenViewModel.onCheckedChange(activity)
+                        }
                     }
                 }
             } else EmptyMessage()
@@ -77,13 +75,13 @@ fun PreviewMainScreen() {
 @ExperimentalMaterialApi
 @Composable
 fun WorkoutCard(
-    fitnessActivity: FitnessActivity = fakeExercise(1,"2020-09-01"),
-    onCheckedChange: (FitnessActivity, Boolean) -> Unit
+    fitnessActivity: FitnessActivity,
+    onCheckedChange: (Boolean) -> Unit
 ) {
-    var a by remember {
+    Log.d(TAG, "WorkoutCard: workout value is $fitnessActivity")
+    var checked by remember {
         mutableStateOf(fitnessActivity.completed)
     }
-
     Card(
         onClick = { /*TODO*/ },
         modifier = Modifier.padding(bottom = 4.dp),
@@ -103,9 +101,10 @@ fun WorkoutCard(
                     style = MaterialTheme.typography.h6
                 )
                 Checkbox(
-                    checked = fitnessActivity.completed,
-                    onCheckedChange = { onCheckedChange(fitnessActivity, a)
-                    a = !a
+                    checked = checked,
+                    onCheckedChange = {
+                        checked = !checked
+                        onCheckedChange(checked)
                     }
                 )
             }
@@ -121,7 +120,7 @@ fun WorkoutCard(
 @Preview(showBackground = true)
 @Composable
 fun PreviewWorkoutCard() {
-  // WorkoutCard()
+    // WorkoutCard()
 }
 
 @Composable
@@ -171,7 +170,7 @@ fun EmptyMessage() {
             style = MaterialTheme.typography.h6,
             textAlign = TextAlign.Center,
             modifier = Modifier
-        
+
         )
     }
 }

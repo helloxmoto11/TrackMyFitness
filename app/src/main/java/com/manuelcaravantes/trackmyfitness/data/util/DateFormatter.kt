@@ -2,7 +2,6 @@ package com.manuelcaravantes.trackmyfitness.data.util
 
 import java.time.LocalDate
 
-const val TAG = "DebuggingLog"
 const val TODAY = "Today"
 const val TOMORROW = "Tomorrow"
 const val YESTERDAY = "Yesterday"

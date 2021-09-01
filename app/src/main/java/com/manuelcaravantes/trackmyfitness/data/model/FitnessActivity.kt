@@ -15,7 +15,7 @@ data class FitnessActivity(
     var distance: Float = 0f,
     var details: String = "",
     var date: String = "",
-    var completed: Boolean = true,
+    var completed: Boolean = false,
     var photoUri: String = "",
     val timeStamp: Long = -1L
 )
