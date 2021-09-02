@@ -10,6 +10,7 @@ import com.manuelcaravantes.trackmyfitness.data.model.FitnessActivityRepository
 import com.manuelcaravantes.trackmyfitness.data.model.fakeExercises
 import com.manuelcaravantes.trackmyfitness.data.util.TODAY
 import com.manuelcaravantes.trackmyfitness.data.util.formatDate
+import com.manuelcaravantes.trackmyfitness.di.FakeRepository
 import com.manuelcaravantes.trackmyfitness.di.FitnessRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -30,6 +31,7 @@ class MainScreenViewModel @Inject constructor(
     private val _stringDate = MutableLiveData(TODAY)
     val date: LiveData<String> get() = _stringDate
 
+    // TODO: 9/2/2021 fix this so it gets from repository. all crud methods update value.
     var activities = repository.getActivitiesByDate(LocalDate.now().toString())
     //private val _activities = MutableLiveData<List<FitnessActivity>> (listOf())
     //val activities: LiveData<List<FitnessActivity>> get() = _activities
