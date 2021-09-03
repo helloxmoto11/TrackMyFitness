@@ -1,6 +1,5 @@
 package com.manuelcaravantes.trackmyfitness.ui.main
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -8,20 +7,19 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.manuelcaravantes.trackmyfitness.R
-import com.manuelcaravantes.trackmyfitness.data.model.FitnessActivity
-import com.manuelcaravantes.trackmyfitness.data.model.fakeExercise
+import com.manuelcaravantes.trackmyfitness.ui.components.WorkoutCard
 
 private const val TAG = "MainScreen"
 
@@ -74,70 +72,6 @@ fun PreviewMainScreen() {
 }
 
 
-//extract this card to be reusable. maybe keep in own file.
-
-@ExperimentalMaterialApi
-@Composable
-fun WorkoutCard(
-    fitnessActivity: FitnessActivity,
-    onCheckedChange: (Boolean) -> Unit
-) {
-    Log.d(TAG, "WorkoutCard: workout value is $fitnessActivity")
-    var checked by remember {
-        mutableStateOf(fitnessActivity.completed)
-    }
-    Card(
-        onClick = { /*TODO*/ },
-        modifier = Modifier.padding(bottom = 4.dp),
-        elevation = 2.dp
-    ) {
-        Column(
-            Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-        ) {
-            Row(
-                Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = fitnessActivity.name,
-                    style = MaterialTheme.typography.h6
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                CompleteText(complete = checked)
-                Checkbox(
-                    checked = checked,
-                    onCheckedChange = {
-                        checked = !checked
-                        onCheckedChange(checked)
-                    }
-                )
-            }
-            Text(text = "Time: ${fitnessActivity.time}")
-            Text(text = "Distance: ${fitnessActivity.distance}")
-            Text(text = "Details: ${fitnessActivity.details}")
-        }
-    }
-
-}
-
-@Composable
-fun CompleteText(complete: Boolean) {
-    if (complete) {
-        Text(text = "Completed",
-            textDecoration = TextDecoration.LineThrough)
-    } else Text(text = "Complete?")
-}
-
-@ExperimentalMaterialApi
-@Preview(showBackground = true)
-@Composable
-fun PreviewWorkoutCard() {
-     WorkoutCard(fakeExercise(100, "Today")) {
-
-     }
-}
 
 @Composable
 fun TodayRow(

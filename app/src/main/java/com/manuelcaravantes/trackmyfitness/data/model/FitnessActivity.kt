@@ -30,7 +30,7 @@ fun fakeExercises(): MutableList<FitnessActivity> {
         "Running",
         "00:45",
         5.4f,
-        "Ran around the neighborhood.",
+        "Ran around the block.",
         yesterday
     )
     val w2 = FitnessActivity(
@@ -57,7 +57,7 @@ fun fakeExercises(): MutableList<FitnessActivity> {
         "Rowing",
         "00:45",
         1.4f,
-        "Spent some time on the rower.",
+        "Rowing.",
         yesterday
     )
     val w5 = FitnessActivity(
