@@ -57,7 +57,7 @@ fun AddExerciseScreen(
             .padding(8.dp)
     ) {
         Text(
-            text = if (update) "Update Exercise" else "Add Exercise",
+            text = if (update) "Update Fitness Activity" else "Add Fitness Activity",
             style = MaterialTheme.typography.h4,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
@@ -171,7 +171,7 @@ fun AutoCompleteTextInput(
             onDismissRequest = { expanded = !expanded },
             modifier = Modifier
                 .width(with(LocalDensity.current) { size.width.toDp() })
-                .height(148.dp)
+                .height(135.dp)
                 .scrollable(scrollState, Orientation.Vertical)
         ) {
             for (item in fitnessActivityList) {
