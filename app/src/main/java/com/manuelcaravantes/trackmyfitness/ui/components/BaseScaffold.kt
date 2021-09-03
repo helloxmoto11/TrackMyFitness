@@ -11,14 +11,12 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.manuelcaravantes.trackmyfitness.ui.addexercise.AddExerciseScreen
 import com.manuelcaravantes.trackmyfitness.ui.main.MainScreen
-import com.manuelcaravantes.trackmyfitness.ui.main.MainScreenViewModel
 import com.manuelcaravantes.trackmyfitness.ui.theme.TrackMyFitnessTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

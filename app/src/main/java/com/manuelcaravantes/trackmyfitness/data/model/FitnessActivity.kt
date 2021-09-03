@@ -70,10 +70,10 @@ fun fakeExercises(): MutableList<FitnessActivity> {
     )
     val w6 = FitnessActivity(
         6,
-        "Gym",
-        "00:25",
+        "Yoga",
+        "01:25",
         1f,
-        "LEG DAY!!",
+        "Bikram!!",
         yesterday
     )
     val w7 = FitnessActivity(

@@ -15,10 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.manuelcaravantes.trackmyfitness.R
 import com.manuelcaravantes.trackmyfitness.data.model.FitnessActivity
 import com.manuelcaravantes.trackmyfitness.data.model.fakeExercise
@@ -34,11 +34,10 @@ fun MainScreen(
     val date = mainScreenViewModel.date.observeAsState()
     val activities by mainScreenViewModel.activities.observeAsState()
 
-
     Column(
         modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 8.dp)
     ) {
         date.value?.let {
             TodayRow(
@@ -49,7 +48,12 @@ fun MainScreen(
         activities?.let { list ->
             if (list.isNotEmpty()) {
                 LazyColumn {
-                    items(list) { activity ->
+                    items(items = list,
+                        key = { item ->
+                            //You have to use a unique key to remember state in lists.
+                            item.id
+                        }
+                    ) { activity ->
                         WorkoutCard(activity) {
                             activity.completed = it
                             mainScreenViewModel.onCheckedChange(activity)
@@ -94,12 +98,14 @@ fun WorkoutCard(
         ) {
             Row(
                 Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = fitnessActivity.name,
                     style = MaterialTheme.typography.h6
                 )
+                Spacer(modifier = Modifier.weight(1f))
+                CompleteText(complete = checked)
                 Checkbox(
                     checked = checked,
                     onCheckedChange = {
@@ -116,11 +122,21 @@ fun WorkoutCard(
 
 }
 
+@Composable
+fun CompleteText(complete: Boolean) {
+    if (complete) {
+        Text(text = "Completed",
+            textDecoration = TextDecoration.LineThrough)
+    } else Text(text = "Complete?")
+}
+
 @ExperimentalMaterialApi
 @Preview(showBackground = true)
 @Composable
 fun PreviewWorkoutCard() {
-    // WorkoutCard()
+     WorkoutCard(fakeExercise(100, "Today")) {
+
+     }
 }
 
 @Composable
