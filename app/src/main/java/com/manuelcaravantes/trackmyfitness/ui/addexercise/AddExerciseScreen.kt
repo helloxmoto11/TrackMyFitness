@@ -1,23 +1,31 @@
 package com.manuelcaravantes.trackmyfitness.ui.addexercise
 
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.ArrowDropUp
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.toSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.manuelcaravantes.trackmyfitness.data.model.fitnessActivityList
 import com.manuelcaravantes.trackmyfitness.ui.addexercise.ExerciseFields.*
-import com.manuelcaravantes.trackmyfitness.ui.theme.TrackMyFitnessTheme
 
 
 @Composable
@@ -27,7 +35,7 @@ fun AddExerciseScreen(
     addExerciseScreenViewModel: AddExerciseScreenViewModel = hiltViewModel(),
     update: Boolean = false,
 
-) {
+    ) {
     val screenState by addExerciseScreenViewModel.screenData.observeAsState()
     val exercise = screenState!!.value
 
@@ -55,16 +63,22 @@ fun AddExerciseScreen(
                 .align(Alignment.CenterHorizontally)
                 .padding(vertical = 16.dp)
         )
-        TextInputRow(
-            NAME,
-            exercise.name,
-            "Exercise",
-            onDataChange
+//        TextInputRow(
+//            NAME,
+//            exercise.name,
+//            "Exercise",
+//            onDataChange
+//        )
+        AutoCompleteTextInput(NAME, exercise.name, "Name", onDataChange)
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(8.dp)
         )
+        TextInputRow(DATE, exercise.date, "Date", onDataChange)
         TextInputRow(TIME, exercise.time, "Time", onDataChange)
         TextInputRow(DISTANCE, exercise.distance.toString(), "Distance", onDataChange)
         TextInputRow(DETAILS, exercise.details, "Details", onDataChange)
-        TextInputRow(DATE, exercise.date, "Date", onDataChange)
         Spacer(modifier = Modifier.weight(1f, true))
         Button(
             onClick = {
@@ -95,7 +109,7 @@ fun TextInputRow(
 //    var text by remember {
 //        mutableStateOf("")
 //    }
-    TextField(
+    OutlinedTextField(
         value = text!!,
         onValueChange = { onValueChange(it, type) },
         label = { Text(text = hint) },
@@ -107,10 +121,84 @@ fun TextInputRow(
     )
 }
 
-@Preview(showBackground = true)
 @Composable
-fun PreviewAddExerciseScreen() {
-    TrackMyFitnessTheme() {
-        AddExerciseScreen()
+fun AutoCompleteTextInput(
+    name: ExerciseFields = NAME,
+    text: String = "",
+    hint: String = "Hint",
+    onValueChange: (String, ExerciseFields) -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    var size by remember { mutableStateOf(Size.Zero) }
+
+    val icon = if (expanded) {
+        Icons.Filled.ArrowDropUp
+    } else Icons.Filled.ArrowDropDown
+
+    val scrollState by remember {
+        mutableStateOf(ScrollState(0))
+    }
+
+    Column(
+
+    ) {
+
+        OutlinedTextField(
+            value = text,
+            onValueChange = { onValueChange(it, name) },
+            label = { Text(text = hint) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .onGloballyPositioned { coordinates ->
+                    size = coordinates.size.toSize()
+                }
+                .onFocusChanged { focusState ->
+                    if (focusState.isFocused) expanded = true
+                },
+            trailingIcon = {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = "Expand Arrow",
+                    modifier = Modifier.clickable {
+                        expanded = !expanded
+                    })
+            }
+        )
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = !expanded },
+            modifier = Modifier
+                .width(with(LocalDensity.current) { size.width.toDp() })
+                .height(148.dp)
+                .scrollable(scrollState, Orientation.Vertical)
+        ) {
+            for (item in fitnessActivityList) {
+                DropdownMenuItem(
+                    onClick = {
+                        expanded = false
+                        onValueChange(item, name)
+                    }
+                ) {
+                    Text(text = item)
+                }
+            }
+
+        }
+
+    }
+
+}
+
+@Preview
+@Composable
+fun PreviewAutoCompleteTextField() {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        AutoCompleteTextInput(onValueChange = { _, _ -> })
     }
 }

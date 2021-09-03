@@ -14,3 +14,5 @@ package com.manuelcaravantes.trackmyfitness.data
 // TODO: 9/1/2021 implement fake repository so i can switch back and forth with annotations. 
 
 // TODO: 8/29/2021 create notifications
+
+// TODO: 9/3/2021 make cards expandable on click.

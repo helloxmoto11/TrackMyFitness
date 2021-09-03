@@ -108,3 +108,7 @@ fun fakeExercises(): MutableList<FitnessActivity> {
 fun fakeExercise(id: Int, date: String): FitnessActivity {
     return FitnessActivity( id = id,name ="Jogging",time =  "00:55",distance =  5f,details =  "Ran around the block",date =  date)
 }
+
+val fitnessActivityList = listOf(
+    "Gym", "Cycling","Running", "Hiking", "Yoga", "Walking", "Rowing", "Swimming"
+)
