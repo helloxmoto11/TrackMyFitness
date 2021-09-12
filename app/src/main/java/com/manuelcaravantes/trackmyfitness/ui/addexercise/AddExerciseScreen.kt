@@ -9,6 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
+import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -26,6 +27,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.manuelcaravantes.trackmyfitness.data.model.fitnessActivityList
 import com.manuelcaravantes.trackmyfitness.ui.addexercise.ExerciseFields.*
+import com.manuelcaravantes.trackmyfitness.ui.theme.TrackMyFitnessTheme
 
 
 @Composable
@@ -75,7 +77,7 @@ fun AddExerciseScreen(
                 .fillMaxWidth()
                 .height(8.dp)
         )
-        TextInputRow(DATE, exercise.date, "Date", onDataChange)
+        DateInput(DATE, exercise.date, "Date", onDataChange)
         TextInputRow(TIME, exercise.time, "Time", onDataChange)
         TextInputRow(DISTANCE, exercise.distance.toString(), "Distance", onDataChange)
         TextInputRow(DETAILS, exercise.details, "Details", onDataChange)
@@ -97,6 +99,7 @@ fun AddExerciseScreen(
         }
     }
 }
+
 
 @Composable
 fun TextInputRow(
@@ -120,6 +123,33 @@ fun TextInputRow(
 
     )
 }
+
+@Composable
+fun DateInput(
+    type: ExerciseFields,
+    text: String?,
+    hint: String = "put hint here",
+    onValueChange: (String, ExerciseFields) -> Unit
+) {
+    OutlinedTextField(
+        value = text!!,
+        onValueChange = { onValueChange(it, type) },
+        label = { Text(text = hint) },
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Default.CalendarToday,
+                contentDescription = "Calendar Icon",
+                Modifier.clickable {
+
+                }
+            )
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp)
+    )
+}
+
 
 @Composable
 fun AutoCompleteTextInput(
