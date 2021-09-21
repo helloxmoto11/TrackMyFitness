@@ -10,7 +10,6 @@ import com.manuelcaravantes.trackmyfitness.data.model.FitnessActivityRepository
 import com.manuelcaravantes.trackmyfitness.data.model.fakeExercises
 import com.manuelcaravantes.trackmyfitness.data.util.TODAY
 import com.manuelcaravantes.trackmyfitness.data.util.formatDate
-import com.manuelcaravantes.trackmyfitness.di.FakeRepository
 import com.manuelcaravantes.trackmyfitness.di.FitnessRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

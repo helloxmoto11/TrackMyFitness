@@ -1,6 +1,8 @@
 package com.manuelcaravantes.trackmyfitness.ui.components
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -22,13 +24,14 @@ import com.manuelcaravantes.trackmyfitness.ui.theme.TrackMyFitnessTheme
 @Composable
 fun WorkoutCard(
     fitnessActivity: FitnessActivity,
-    onCheckedChange: (Boolean) -> Unit
+    onCheckedChange: (Boolean) -> Unit,
+    onCardClicked: (FitnessActivity) -> Unit
 ) {
     var checked by remember {
         mutableStateOf(fitnessActivity.completed)
     }
     Card(
-        onClick = { /*TODO*/ },
+        onClick = { onCardClicked(fitnessActivity) },
         modifier = Modifier.padding(bottom = 4.dp),
         elevation = 2.dp,
         shape = MaterialTheme.shapes.large
@@ -50,7 +53,10 @@ fun WorkoutCard(
                         style = MaterialTheme.typography.h6
                     )
                     Spacer(modifier = Modifier.weight(1f))
-                    CompleteText(complete = checked)
+                    CompleteText(
+                        complete = checked,
+                        onCompleteChange = { checked = it}
+                    )
                     Checkbox(
                         checked = checked,
                         onCheckedChange = {
@@ -88,21 +94,30 @@ fun WorkoutImage(activityType: String, modifier: Modifier) {
 }
 
 @Composable
-fun CompleteText(complete: Boolean) {
+fun CompleteText(complete: Boolean, onCompleteChange: (Boolean) -> Unit) {
     if (complete) {
         Text(
-            text = "Completed",
-            textDecoration = TextDecoration.LineThrough
+            text = "Completed ",
+            textDecoration = TextDecoration.LineThrough,
+            modifier = Modifier.clickable {
+                onCompleteChange(!complete)
+            }
         )
-    } else Text(text = "Complete?")
+    } else Text(
+        text = "Complete? ",
+        modifier = Modifier.clickable {
+            onCompleteChange(!complete)
+        }
+    )
 }
 
 @ExperimentalMaterialApi
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Preview(showBackground = true)
 @Composable
 fun PreviewWorkoutCard() {
     TrackMyFitnessTheme() {
-        WorkoutCard(fakeExercise(100, "Today")) {
+        WorkoutCard(fakeExercise(100, "Today"), {}) {
         }
     }
 }

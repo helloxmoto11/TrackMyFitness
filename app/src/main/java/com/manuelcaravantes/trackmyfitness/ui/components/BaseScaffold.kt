@@ -16,6 +16,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.manuelcaravantes.trackmyfitness.ui.addexercise.AddExerciseScreen
+import com.manuelcaravantes.trackmyfitness.ui.detail.ExerciseDetailScreen
 import com.manuelcaravantes.trackmyfitness.ui.main.MainScreen
 import com.manuelcaravantes.trackmyfitness.ui.theme.TrackMyFitnessTheme
 import kotlinx.coroutines.CoroutineScope
@@ -57,12 +58,15 @@ fun ScreenScaffold(
         ) {
             composable("MAINSCREEN") {
               //  val viewModel: MainScreenViewModel = hiltViewModel()
-
-                MainScreen()
+                MainScreen(navController = navController)
                showFab = true
             }
             composable("AddScreen") {
                 AddExerciseScreen(navController = navController)
+                showFab = false
+            }
+            composable("ExerciseDetailScreen") {
+                ExerciseDetailScreen(navController = navController)
                 showFab = false
             }
         }

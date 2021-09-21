@@ -12,7 +12,7 @@ data class FitnessActivity(
     var id: Int = -1,
     var name: String = "",
     var time: String = "",
-    var distance: Float = 0f,
+    var distance: Double = 0.0,
     var details: String = "",
     var date: String = "",
     var completed: Boolean = false,
@@ -29,7 +29,7 @@ fun fakeExercises(): MutableList<FitnessActivity> {
         1,
         "Running",
         "00:45",
-        5.4f,
+        5.4,
         "Ran around the block.",
         yesterday
     )
@@ -37,7 +37,7 @@ fun fakeExercises(): MutableList<FitnessActivity> {
         2,
         "Gym",
         "00:45",
-        0f,
+        0.0,
         "Back and Biceps.",
         yesterday,
         false
@@ -46,7 +46,7 @@ fun fakeExercises(): MutableList<FitnessActivity> {
         3,
         "Swimming",
         "00:25",
-        1f,
+        1.0,
         "Swam in the pool.",
         yesterday,
         false
@@ -56,7 +56,7 @@ fun fakeExercises(): MutableList<FitnessActivity> {
         4,
         "Rowing",
         "00:45",
-        1.4f,
+        1.4,
         "Rowing.",
         yesterday
     )
@@ -64,7 +64,7 @@ fun fakeExercises(): MutableList<FitnessActivity> {
         5,
         "Walking",
         "00:45",
-        0f,
+        0.0,
         "Went for a Walk",
         today
     )
@@ -72,7 +72,7 @@ fun fakeExercises(): MutableList<FitnessActivity> {
         6,
         "Yoga",
         "01:25",
-        1f,
+        1.0,
         "Bikram!!",
         yesterday
     )
@@ -80,7 +80,7 @@ fun fakeExercises(): MutableList<FitnessActivity> {
         7,
         "Elliptical",
         "00:45",
-        3f,
+        3.0,
         "Bit of cardio.",
         yesterday
     )
@@ -88,7 +88,7 @@ fun fakeExercises(): MutableList<FitnessActivity> {
         8,
         "Hiking",
         "02:25",
-        6.5f,
+        6.0,
         "Went for a hike.",
         tomorrow
     )
@@ -96,7 +96,7 @@ fun fakeExercises(): MutableList<FitnessActivity> {
         9,
         "Gym",
         "00:25",
-        1f,
+        1.0,
         "Push!!",
         tomorrow
     )
@@ -110,7 +110,7 @@ fun fakeExercise(id: Int, date: String): FitnessActivity {
         id = id,
         name = "Jogging",
         time = "00:55",
-        distance = 5f,
+        distance = 5.0,
         details = "Ran around the block",
         date = date
     )

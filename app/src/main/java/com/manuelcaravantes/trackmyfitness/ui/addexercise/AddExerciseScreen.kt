@@ -44,7 +44,7 @@ fun AddExerciseScreen(
         when (field) {
             NAME -> exercise.name = value
             TIME -> exercise.time = value
-            DISTANCE -> exercise.distance = value.toFloat()
+            DISTANCE -> exercise.distance = value.toDouble()
             DETAILS -> exercise.details = value
             DATE -> exercise.date = value
         }

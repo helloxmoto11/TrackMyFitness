@@ -18,6 +18,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.manuelcaravantes.trackmyfitness.R
 import com.manuelcaravantes.trackmyfitness.ui.components.WorkoutCard
 
@@ -28,6 +30,7 @@ private const val TAG = "MainScreen"
 fun MainScreen(
     modifier: Modifier = Modifier,
     mainScreenViewModel: MainScreenViewModel = hiltViewModel(),
+    navController: NavController = rememberNavController()
 ) {
     val date = mainScreenViewModel.date.observeAsState()
     val activities by mainScreenViewModel.activities.observeAsState()
@@ -52,10 +55,14 @@ fun MainScreen(
                             item.id
                         }
                     ) { activity ->
-                        WorkoutCard(activity) {
-                            activity.completed = it
-                            mainScreenViewModel.onCheckedChange(activity)
-                        }
+                        WorkoutCard(
+                            fitnessActivity = activity,
+                            onCheckedChange = {
+                                activity.completed = it
+                                mainScreenViewModel.onCheckedChange(activity)
+                            },
+                            onCardClicked = { navController.navigate("ExerciseDetailScreen") }
+                        )
                     }
                 }
             } else EmptyMessage()
@@ -70,7 +77,6 @@ fun MainScreen(
 fun PreviewMainScreen() {
     MainScreen()
 }
-
 
 
 @Composable
