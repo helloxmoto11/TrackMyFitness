@@ -11,14 +11,17 @@ import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.manuelcaravantes.trackmyfitness.ui.theme.TrackMyFitnessTheme
 
+
+
 @Composable
-fun CustomCalendar() {
+fun CustomCalendar(
+    onCancelPressed: () -> Unit
+) {
     Card() {
         Column(
             Modifier
@@ -29,12 +32,12 @@ fun CustomCalendar() {
                 Modifier
                     .fillMaxWidth()
                     .height(120.dp)
-                    .background(MaterialTheme.colors.primary)
+                    .background(MaterialTheme.colors.secondary)
                     .padding(16.dp),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(text = "Select Date", fontSize = 16.sp)
-                Text(text = "Monday, September 26th", fontSize = 24.sp)
+                Text(text = "Mon, September 26th", fontSize = 24.sp)
             }
             Row(
                 Modifier
@@ -42,9 +45,15 @@ fun CustomCalendar() {
                     .padding(top = 16.dp, bottom = 16.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "left arrow")
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowLeft,
+                    contentDescription = "left arrow"
+                )
                 Text(text = "September 2021")
-                Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = "right arrow")
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowRight,
+                    contentDescription = "right arrow"
+                )
             }
             //CALENDAR DAYS BOX
             var count = 1
@@ -82,9 +91,10 @@ fun CustomCalendar() {
                                 .align(Alignment.CenterVertically)
 
                         ) {
+                            val color = MaterialTheme.colors.secondary
+                            if (count == 12)
                             Canvas(modifier = Modifier.fillMaxSize()) {
-                                if (count == 12)
-                                drawCircle(Color.Red)
+                                    drawCircle(color = color)
                             }
                             Text(
                                 text = "$count",
@@ -102,12 +112,20 @@ fun CustomCalendar() {
                     .padding(top = 8.dp, bottom = 8.dp),
                 horizontalArrangement = Arrangement.End
             ) {
-                TextButton(onClick = { /*TODO*/ }) {
-                    Text(text = "Cancel", fontSize = 16.sp)
+                TextButton(onClick = onCancelPressed) {
+                    Text(
+                        text = "Cancel",
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colors.secondary
+                    )
                 }
                 Spacer(modifier = Modifier.width(16.dp))
                 TextButton(onClick = { /*TODO*/ }) {
-                    Text(text = "OK", fontSize = 16.sp)
+                    Text(
+                        text = "OK",
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colors.secondary
+                    )
                 }
             }
         }
@@ -119,7 +137,7 @@ fun CustomCalendar() {
 @Composable
 fun PreviewCustomCalendar() {
     TrackMyFitnessTheme() {
-        CustomCalendar()
+        CustomCalendar {}
     }
 }
 

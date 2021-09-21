@@ -22,11 +22,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.manuelcaravantes.trackmyfitness.data.model.fitnessActivityList
 import com.manuelcaravantes.trackmyfitness.ui.addexercise.ExerciseFields.*
+import com.manuelcaravantes.trackmyfitness.ui.components.CustomCalendar
 
 
 @Composable
@@ -49,6 +51,18 @@ fun AddExerciseScreen(
             DATE -> exercise.date = value
         }
         addExerciseScreenViewModel.onDataChange(exercise)
+    }
+
+    var showCalendar by remember {
+        mutableStateOf(false)
+    }
+
+    if (showCalendar) {
+        Dialog(onDismissRequest = { showCalendar = false }) {
+            CustomCalendar {
+                showCalendar = false
+            }
+        }
     }
 
 
@@ -76,7 +90,7 @@ fun AddExerciseScreen(
                 .fillMaxWidth()
                 .height(8.dp)
         )
-        DateInput(DATE, exercise.date, "Date", onDataChange)
+        DateInput(DATE, exercise.date, "Date", onDataChange, {showCalendar = true})
         TextInputRow(TIME, exercise.time, "Time", onDataChange)
         TextInputRow(DISTANCE, exercise.distance.toString(), "Distance", onDataChange)
         TextInputRow(DETAILS, exercise.details, "Details", onDataChange)
@@ -128,7 +142,8 @@ fun DateInput(
     type: ExerciseFields,
     text: String?,
     hint: String = "put hint here",
-    onValueChange: (String, ExerciseFields) -> Unit
+    onValueChange: (String, ExerciseFields) -> Unit,
+    onCalendarClicked: () -> Unit
 ) {
     OutlinedTextField(
         value = text!!,
@@ -139,7 +154,7 @@ fun DateInput(
                 imageVector = Icons.Default.CalendarToday,
                 contentDescription = "Calendar Icon",
                 Modifier.clickable {
-
+                    onCalendarClicked()
                 }
             )
         },
