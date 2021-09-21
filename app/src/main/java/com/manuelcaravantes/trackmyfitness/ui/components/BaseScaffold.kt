@@ -66,7 +66,8 @@ fun ScreenScaffold(
                 showFab = false
             }
             composable("ExerciseDetailScreen") {
-                ExerciseDetailScreen(navController = navController)
+                //ExerciseDetailScreen(navController = navController)
+                ExerciseDetailScreen()
                 showFab = false
             }
         }
