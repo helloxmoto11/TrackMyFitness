@@ -59,7 +59,8 @@ fun AddExerciseScreen(
 
     if (showCalendar) {
         Dialog(onDismissRequest = { showCalendar = false }) {
-            CustomCalendar {
+            CustomCalendar(onNegativeButtonClicked = {},
+                onPositiveButtonClicked = {}) {
                 showCalendar = false
             }
         }
@@ -90,7 +91,7 @@ fun AddExerciseScreen(
                 .fillMaxWidth()
                 .height(8.dp)
         )
-        DateInput(DATE, exercise.date, "Date", onDataChange, {showCalendar = true})
+        DateInput(DATE, exercise.date, "Date", onDataChange, { showCalendar = true })
         TextInputRow(TIME, exercise.time, "Time", onDataChange)
         TextInputRow(DISTANCE, exercise.distance.toString(), "Distance", onDataChange)
         TextInputRow(DETAILS, exercise.details, "Details", onDataChange)
