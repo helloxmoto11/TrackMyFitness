@@ -8,18 +8,21 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.manuelcaravantes.trackmyfitness.data.util.Calendar
+import com.manuelcaravantes.trackmyfitness.data.util.WeekDay
 import com.manuelcaravantes.trackmyfitness.ui.theme.TrackMyFitnessTheme
 import java.time.LocalDate
-
 @Composable
 fun CustomCalendar(
+    calendar: Calendar = Calendar(),
     headerColor: Color = MaterialTheme.colors.secondary,
     buttonColor: Color = MaterialTheme.colors.secondary,
     selectedDayColor: Color = MaterialTheme.colors.secondary,
@@ -27,19 +30,26 @@ fun CustomCalendar(
     onPositiveButtonClicked: () -> Unit,
     onDateSelected: (LocalDate) -> Unit
 ) {
+    var monthYear by remember {
+        mutableStateOf(calendar._monthYear)
+    }
+
     Card() {
         Column(
             Modifier
                 .fillMaxWidth()
         ) {
             CalendarHeader(
-                background = headerColor
+                background = headerColor,
+                calendar.dayAsString
             )
             MonthSelectorRow(
-                onIncrementMonth = { /*TODO*/ },
-                onDecrementMonth = { /*TODO*/ })
+                month = monthYear,
+                onIncrementMonth = { monthYear = calendar.onIncrementMonth() },
+                onDecrementMonth = { monthYear = calendar.onDecrementMonth() }
+            )
             DayOfWeekRow()
-            DayOfMonthBox(
+            CalendarFrame(
                 selectedDay = 15,
                 selectedDayColor = selectedDayColor,
                 onDateSelected = { }
@@ -53,20 +63,12 @@ fun CustomCalendar(
     }
 }
 
-@Preview(showBackground = false, uiMode = UI_MODE_NIGHT_YES)
-@Preview(showBackground = false)
-@Composable
-fun PreviewCustomCalendar() {
-    TrackMyFitnessTheme() {
-        CustomCalendar(onNegativeButtonClicked = {},
-            onPositiveButtonClicked = {}) {}
-    }
-}
+
 
 @Composable
 private fun CalendarHeader(
     background: Color,
-    selectedDate: String = "Mon, September 26"
+    selectedDate: String
 ) {
     Column(
         Modifier
@@ -83,7 +85,7 @@ private fun CalendarHeader(
 
 @Composable
 fun MonthSelectorRow(
-    month: String = "September 2021",
+    month: String,
     onIncrementMonth: () -> Unit,
     onDecrementMonth: () -> Unit
 ) {
@@ -91,17 +93,22 @@ fun MonthSelectorRow(
         Modifier
             .fillMaxWidth()
             .padding(top = 16.dp, bottom = 16.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
-            imageVector = Icons.Default.KeyboardArrowLeft,
-            contentDescription = "left arrow"
-        )
-        Text(text = "September 2021")
-        Icon(
-            imageVector = Icons.Default.KeyboardArrowRight,
-            contentDescription = "right arrow"
-        )
+        IconButton(onClick = onDecrementMonth) {
+            Icon(
+                imageVector = Icons.Default.KeyboardArrowLeft,
+                contentDescription = "left arrow"
+            )
+        }
+        Text(text = month)
+        IconButton(onClick = onIncrementMonth) {
+            Icon(
+                imageVector = Icons.Default.KeyboardArrowRight,
+                contentDescription = "right arrow"
+            )
+        }
     }
 }
 
@@ -139,8 +146,10 @@ fun DayOfWeekRow() {
 }
 
 @Composable
-fun DayOfMonthBox(
-    selectedDay: Int = 12,
+fun CalendarFrame(
+    daysInMonth: Int = 30,
+    firstDayOfMonth: WeekDay = WeekDay.Sunday(),
+    selectedDay: Int,
     selectedDayColor: Color,
     onDateSelected: () -> Unit
 ) {
@@ -205,4 +214,14 @@ fun ButtonLayout(
         }
     }
 
+}
+
+@Preview(showBackground = false, uiMode = UI_MODE_NIGHT_YES)
+@Preview(showBackground = false)
+@Composable
+fun PreviewCustomCalendar() {
+    TrackMyFitnessTheme() {
+        CustomCalendar(onNegativeButtonClicked = {},
+            onPositiveButtonClicked = {}) {}
+    }
 }
