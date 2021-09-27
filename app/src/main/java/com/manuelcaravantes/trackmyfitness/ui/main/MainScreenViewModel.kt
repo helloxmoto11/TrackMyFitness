@@ -15,6 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
+import javax.inject.Singleton
 
 private const val TAG = "MainScreenViewModel"
 @HiltViewModel
@@ -22,9 +23,13 @@ class MainScreenViewModel @Inject constructor(
     @FitnessRepository private val repository: FitnessActivityRepository
 ) : ViewModel() {
 
+    fun setTempActivity(fitnessActivity: FitnessActivity) {
+        repository.tempActivity = fitnessActivity
+    }
 
-
-    // TODO: 8/30/2021   val exercises = repository.exercises
+    fun getTempActivity(): FitnessActivity {
+        return repository.tempActivity
+    }
 
     private val _date = MutableLiveData(LocalDate.now())
     private val _stringDate = MutableLiveData(TODAY)

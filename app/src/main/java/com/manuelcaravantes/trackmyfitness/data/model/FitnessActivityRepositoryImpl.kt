@@ -7,6 +7,8 @@ class FitnessActivityRepositoryImpl @Inject constructor(
     private val fitnessActivityDao: FitnessActivityDao
 ): FitnessActivityRepository {
 
+    override var tempActivity: FitnessActivity = FitnessActivity()
+
     override  fun getAllActivities(): LiveData<List<FitnessActivity>> {
         return fitnessActivityDao.getAllFitnessActivities()
     }

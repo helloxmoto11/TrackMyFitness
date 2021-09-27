@@ -1,6 +1,7 @@
 package com.manuelcaravantes.trackmyfitness.ui.detail
 
 import androidx.lifecycle.ViewModel
+import com.manuelcaravantes.trackmyfitness.data.model.FitnessActivity
 import com.manuelcaravantes.trackmyfitness.data.model.FitnessActivityRepository
 import com.manuelcaravantes.trackmyfitness.di.FitnessRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,4 +12,7 @@ class ExerciseDetailScreenViewModel @Inject constructor(
     @FitnessRepository private val repository: FitnessActivityRepository
 ) : ViewModel() {
 
+    fun getTempActivity(): FitnessActivity {
+        return repository.tempActivity
+    }
 }

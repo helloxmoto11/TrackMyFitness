@@ -61,7 +61,9 @@ fun MainScreen(
                                 activity.completed = it
                                 mainScreenViewModel.onCheckedChange(activity)
                             },
-                            onCardClicked = { navController.navigate("ExerciseDetailScreen") }
+                            onCardClicked = {
+                                mainScreenViewModel.setTempActivity(it)
+                                navController.navigate("ExerciseDetailScreen") }
                         )
                     }
                 }

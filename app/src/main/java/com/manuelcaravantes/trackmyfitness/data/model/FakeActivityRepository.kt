@@ -9,6 +9,10 @@ private const val TAG = "FakeActivityRepository"
 class FakeActivityRepository @Inject constructor(
 ): FitnessActivityRepository {
 
+    override var tempActivity: FitnessActivity
+        get() = TODO("Not yet implemented")
+        set(value) {}
+
     private val allActivities = fakeExercises()
     private val _activities: MutableLiveData<List<FitnessActivity>> = MutableLiveData(allActivities)
     val activities: LiveData<List<FitnessActivity>> = _activities

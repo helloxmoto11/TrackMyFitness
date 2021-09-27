@@ -1,5 +1,9 @@
 package com.manuelcaravantes.trackmyfitness.ui.addexercise
 
+import android.app.DatePickerDialog
+import android.util.Log
+import android.widget.DatePicker
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
@@ -9,6 +13,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
+import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -17,7 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,10 +33,12 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.manuelcaravantes.trackmyfitness.data.model.fitnessActivityList
 import com.manuelcaravantes.trackmyfitness.ui.addexercise.ExerciseFields.*
 import com.manuelcaravantes.trackmyfitness.ui.components.CustomCalendar
 
+private const val TAG = "AddExerciseScreen"
 
 @Composable
 fun AddExerciseScreen(
@@ -56,14 +65,31 @@ fun AddExerciseScreen(
     var showCalendar by remember {
         mutableStateOf(false)
     }
+    var date by remember {
+        mutableStateOf(exercise.date)
+    }
 
     if (showCalendar) {
-        Dialog(onDismissRequest = { showCalendar = false }) {
-            CustomCalendar(onNegativeButtonClicked = {},
-                onPositiveButtonClicked = {}) {
-                showCalendar = false
-            }
+        // FIXME: 9/24/2021 decide which one of these to use.
+//        Dialog(onDismissRequest = { showCalendar = false }) {
+//            CustomCalendar(onNegativeButtonClicked = {},
+//                onPositiveButtonClicked = {}) {
+//                showCalendar = false
+//            }
+//        }
+        val activity = LocalContext.current
+        val dp = DatePickerDialog(activity)
+        dp.show()
+        dp.setOnDateSetListener { datePicker, _year, _month, _dayOfMonth ->
+            showCalendar = false
+            val year = _year
+            val month = if (_month+1 < 10) "0${_month+1}" else _month+1
+            val day = _dayOfMonth
+            val _date = "$year-$month-$day"
+            date = _date
+            Log.d(TAG, "AddExerciseScreen: date is $_year ${_month+1} $_dayOfMonth")
         }
+
     }
 
 
@@ -79,19 +105,14 @@ fun AddExerciseScreen(
                 .align(Alignment.CenterHorizontally)
                 .padding(vertical = 16.dp)
         )
-//        TextInputRow(
-//            NAME,
-//            exercise.name,
-//            "Exercise",
-//            onDataChange
-//        )
+
         AutoCompleteTextInput(NAME, exercise.name, "Name", onDataChange)
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(8.dp)
         )
-        DateInput(DATE, exercise.date, "Date", onDataChange, { showCalendar = true })
+        DateInput(DATE, date, "Date", onDataChange, { showCalendar = true })
         TextInputRow(TIME, exercise.time, "Time", onDataChange)
         TextInputRow(DISTANCE, exercise.distance.toString(), "Distance", onDataChange)
         TextInputRow(DETAILS, exercise.details, "Details", onDataChange)
@@ -150,7 +171,7 @@ fun DateInput(
         value = text!!,
         onValueChange = { onValueChange(it, type) },
         label = { Text(text = hint) },
-        leadingIcon = {
+        trailingIcon = {
             Icon(
                 imageVector = Icons.Default.CalendarToday,
                 contentDescription = "Calendar Icon",
@@ -180,7 +201,6 @@ fun AutoCompleteTextInput(
     val icon = if (expanded) {
         Icons.Filled.ArrowDropUp
     } else Icons.Filled.ArrowDropDown
-
     val scrollState by remember {
         mutableStateOf(ScrollState(0))
     }

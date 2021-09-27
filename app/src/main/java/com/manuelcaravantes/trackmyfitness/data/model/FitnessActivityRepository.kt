@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 
 interface FitnessActivityRepository {
 
+    var tempActivity: FitnessActivity
+
     fun getAllActivities(): LiveData<List<FitnessActivity>>
 
     fun getActivitiesByDate(date: String): LiveData<List<FitnessActivity>>
